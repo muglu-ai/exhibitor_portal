@@ -48,17 +48,18 @@ OPTION	BOOTH SIZE(SQM)	TOTAL COST IN INR
                     </table>
                 </div>
             </div>
+
         </section>
     </div>
-</div>
 
 
-    <form action="{{ route('exhibitor.submit') }}" method="POST" class="mx-auto mt-16 max-w-xl sm:mt-20">
+
+    <form action="{{ route('exhibitor.submit') }}" method="POST" class="mx-auto mt-5 max-w-xl sm:mt-8" enctype="multipart/form-data">
          @csrf
 
         <!--Select booth size radio button either 6sqm or 9sqm -->
         <div class="sm:col-span-2">
-            <label for="booth_size" class="block text-sm font-semibold leading-6 text-gray-900">Booth Size</label>
+            <label for="booth_size" class="block text-sm font-semibold leading-6 text-gray-900">Select Booth Size</label>
         <div class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
             <div class="mt-2.5 flex justify-between">
     <div class="flex items-center">
@@ -75,7 +76,7 @@ OPTION	BOOTH SIZE(SQM)	TOTAL COST IN INR
 
         <!-- dropdown of sector  to select one of the sector -->
         <div class="sm:col-span-2 mt-5">
-            <label for="sector" class="block text-sm font-semibold leading-6 text-gray-900">Sector</label>
+            <label for="sector" class="block text-sm font-semibold leading-6 text-gray-900">Select Sector</label>
             <div class="mt-2.5">
                 <select name="sector" id="sector" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                     <option value="">Select Sector</option>
@@ -109,7 +110,7 @@ OPTION	BOOTH SIZE(SQM)	TOTAL COST IN INR
         <div class="sm:col-span-2 mt-5">
             <label for="invoice_add" class="block text-sm font-semibold leading-6 text-gray-900">Invoice Address</label>
             <div class="mt-2.5">
-                <input type="text" name="invoice_add" id="invoice_add" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></input>
+                <input type="text" name="invoice_add" id="invoice_add" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">  </input>
             </div>
         </div>
         <!-- Organisation Address -->
@@ -303,6 +304,7 @@ Please Note: 3% processing charges is applicable for CCAVenue payment mode
         </div>
     </form>
 </div>
+
 
 <script>
     document.getElementById('gst_reg').addEventListener('change', function() {
