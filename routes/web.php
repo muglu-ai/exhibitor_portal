@@ -43,6 +43,7 @@ Route::get('/newdelegate', [DelegateController::class, 'show'])->name('delegate.
 // Route::get('portal/exhibitor', [App\Http\Controllers\ExhibitorController::class, 'getAllExhibitor'])->name('get_all_exhibitor');
 Route::middleware('auth')->group(function () {
 
+
 Route::get('portal/exhibitor', [App\Http\Controllers\ExhibitorController::class, 'getOneExhibitor'])->name('get_one_exhibitor');
 Route::post('portal/exhibitor', [App\Http\Controllers\ExhibitorController::class, 'postExhibitor'])->name('post_exhibitor');
 Route::put('portal/exhibitor', [App\Http\Controllers\ExhibitorController::class, 'updateExhibitor'])->name('update_exhibitor');
@@ -65,6 +66,6 @@ Route::put('portal/editExhibitorDelegate', [App\Http\Controllers\ExhibitorDelega
 Route::post('portal/submitExhibitorDelegateData', [App\Http\Controllers\ExhibitorDelegatesController::class, 'postExhibitorDelegate'])->name('post_ExhibitorDelegate');
 });
 //Portal Login post
-//Route::get('/portal', function () {
-//    return view('portal.pages.dashboard');
-//})->middleware(['auth', 'verified'])->name('portal');
+Route::get('/portal', function () {
+    return view('portal.pages.dashboard');
+})->middleware(['auth', 'verified'])->name('portal');
