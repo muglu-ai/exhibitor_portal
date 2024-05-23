@@ -4,6 +4,7 @@
 <div class="dash-content">
     <div class="overview">
         <h1>Exhibitor Details</h1>
+        <!-- <pre>{{ json_encode($exhibitor, JSON_PRETTY_PRINT) }}</pre> -->
         <table class="table table-bordered mt-3">
             <thead class="thead-dark">
                 <tr>

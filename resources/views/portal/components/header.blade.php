@@ -54,10 +54,10 @@
             </ul>
 
             <ul class="logout-mode">
-                <li><a href="#">
+                <!-- <li><a href="#">
                         <i class="uil uil-signout"></i>
                         <span class="link-name">Logout</span>
-                    </a></li>
+                    </a></li> -->
 
                 <li class="mode">
                     <a href="#">
