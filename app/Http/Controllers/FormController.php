@@ -23,9 +23,18 @@ class FormController extends Controller
         $countries2 = Country::paginate(10);
 //       country_flag('IN');
         $countries = CountryListFacade::getList('en');
+        //sector
+        $sectors = $this->sectorList();
 
 
-        return view('exhibitor.create',['countries2' => $countries2], compact('countries',  ));
+        return view('exhibitor.create', compact('countries','sectors'  ));
+    }
+
+    //List of sector
+    private function sectorList()
+    {
+        $sector = array('Information Technology' => 'Information Technology', 'Electronics' => 'Electronics', 'Biotechnology' => 'Biotechnology', 'Startup' => 'Startup', 'Academia & University (not for Student Only Faculty and HOD)' => 'Academia & University (not for Student Only Faculty and HOD)', 'Others' => 'Others');
+        return $sector;
     }
 
     public function showCountryFlags(): \Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application

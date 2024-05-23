@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('exhibitor_stall_manning', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('exhibitor_id',15);
+            $table->string('exhibitor_id',30);
             $table->string('org_name',250)->nullable();
             $table->string('sm1_name',250)->nullable();
             $table->string('sm1_email',250)->nullable();

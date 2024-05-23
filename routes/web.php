@@ -37,7 +37,7 @@ require __DIR__.'/auth.php';
 Route::get('/newdelegate', [DelegateController::class, 'show'])->name('delegate.create');
 
 
-Route::get('/portal', [App\Http\Controllers\ExhibitorController::class, 'view'])->name('portal');
+//Route::get('/portal', [App\Http\Controllers\ExhibitorController::class, 'view'])->name('portal');
 
 //exhibitorController -->harsh
 // Route::get('portal/exhibitor', [App\Http\Controllers\ExhibitorController::class, 'getAllExhibitor'])->name('get_all_exhibitor');
@@ -63,6 +63,6 @@ Route::put('portal/editExhibitorDelegate', [App\Http\Controllers\ExhibitorDelega
 Route::post('portal/submitExhibitorDelegateData', [App\Http\Controllers\ExhibitorDelegatesController::class, 'postExhibitorDelegate'])->name('post_ExhibitorDelegate');
 
 //Portal Login post
-//Route::get('/portal', function () {
-//    return view('portal.pages.dashboard');
-//})->middleware(['auth', 'verified'])->name('portal');
+Route::get('/portal', function () {
+    return view('portal.pages.dashboard');
+})->middleware(['auth', 'verified'])->name('portal');

@@ -15,7 +15,7 @@ return new class extends Migration
 
         Schema::create('exhibitor_directory_table', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('exhibitor_id',15);
+            $table->string('exhibitor_id',30);
             $table->string('org_name',250)->nullable();
             $table->string('fascia_name',250)-> nullable();
             $table->string('org_logo')->nullable();

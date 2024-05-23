@@ -1,4 +1,4 @@
-@include('layouts.formheader')  
+@include('layouts.formheader')
 @include('layouts.form_navbar')
 
 <div class="isolate bg-white px-6 py-24 sm:py-32 lg:px-8" style="
@@ -9,27 +9,192 @@
         </div>
 
     </div>
-    
+    <!-- Table which contains the tariff Exhibition Tariff – StartUp Innovation Zone
+OPTION	BOOTH SIZE(SQM)	TOTAL COST IN INR
+1	6	39,999
+2	9	59,999 -->
+    <div class="max-w-3xl mx-auto">
+        <section class="w-full max-w-4xl mx-auto py-12 md:py-16">
+            <div class="flex flex-col gap-6">
+                <div class="text-center space-y-2">
+                    <h2 class="text-3xl font-bold tracking-tight text-indigo-600 dark:text-indigo-400">
+                        Exhibition Tariff - StartUp Innovation Zone
+                    </h2>
+                    <p class="text-gray-500 dark:text-gray-400 font-medium">
+                        Choose the tariff option that best suits your needs.
+                    </p>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full border-collapse text-left">
+                        <thead class="bg-indigo-600 text-white dark:bg-indigo-400 dark:text-gray-950">
+                        <tr>
+                            <th class="px-4 py-3 font-medium">OPTION</th>
+                            <th class="px-4 py-3 font-medium">BOOTH SIZE (SQM)</th>
+                            <th class="px-4 py-3 font-medium">TOTAL COST IN INR</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="border-b border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-800">
+                            <td class="px-4 py-3 font-medium text-indigo-600 dark:text-indigo-400">Option 1</td>
+                            <td class="px-4 py-3">6</td>
+                            <td class="px-4 py-3">39,999</td>
+                        </tr>
+                        <tr class="border-b border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-800">
+                            <td class="px-4 py-3 font-medium text-indigo-600 dark:text-indigo-400">Option 2</td>
+                            <td class="px-4 py-3">9</td>
+                            <td class="px-4 py-3">59,999</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+
     <form action="{{ route('exhibitor.submit') }}" method="POST" class="mx-auto mt-16 max-w-xl sm:mt-20" style="
         margin-top: 20px;">
          @csrf
-         
+
+        <!--Select booth size radio button either 6sqm or 9sqm -->
         <div class="sm:col-span-2">
-            <label for="exhibitor_name" class="block text-sm font-semibold leading-6 text-gray-900">Name of the Exhibitor</label>
+            <label for="booth_size" class="block text-sm font-semibold leading-6 text-gray-900">Booth Size</label>
+        <div class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
+            <div class="mt-2.5 flex justify-between">
+    <div class="flex items-center">
+        <input type="radio" name="booth_size" id="booth_size_6sqm" value="6sqm" class="rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+        <label for="booth_size_6sqm" class="block text-sm font-semibold leading-6 text-gray-900 ml-2">6sqm</label>
+    </div>
+    <div class="flex items-center">
+        <input type="radio" name="booth_size" id="booth_size_9sqm" value="9sqm" class="rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+        <label for="booth_size_9sqm" class="block text-sm font-semibold leading-6 text-gray-900 ml-2">9sqm</label>
+    </div>
+            </div>
+</div>
+        </div>
+
+        <!-- dropdown of sector  to select one of the sector -->
+        <div class="sm:col-span-2 mt-5">
+            <label for="sector" class="block text-sm font-semibold leading-6 text-gray-900">Sector</label>
+            <div class="mt-2.5">
+                <select name="sector" id="sector" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                    <option value="">Select Sector</option>
+                    @foreach ($sectors as $sector)
+                        <option value="{{ $sector }}">{{ $sector }}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+
+        <div class="sm:col-span-2 mt-5">
+            <label for="exhibitor_name" class="block text-sm font-semibold leading-6 text-gray-900">Name of the Exhibitor (Organisation Name)</label>
             <div class="mt-2.5">
               <input type="text" name="exhibitor_name" id="exhibitor_name" autocomplete="exhibitor_name" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Enter your Organisation name">
             </div>
         </div>
-        <br>
+        <!-- Upload of Company Registration Certificate / Certificate of Incorporation -->
+        <div class="sm:col-span-2 mt-5">
+            <label for="company_reg" class="block text-sm font-semibold leading-6 text-gray-900">Upload Company Registration Certificate / Certificate of Incorporation</label>
+            <div class="mt-2.5">
+                <input type="file" accept="application/pdf" name="company_reg" id="company_reg" autocomplete="company_reg" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+            </div>
+            <!-- Note:
+            1. File should be in PDF format
+            2. File size should not exceed 2MB -->
+            <p class="text-sm text-gray-600 mt-2">Note: File should be in PDF format and size should not exceed 2MB</p>
 
-            <div class="sm:col-span-2">
-                <label for="fas_name" class="block text-sm font-semibold leading-6 text-gray-900">Name for Fascia *</label>
+        </div>
+
+        <!-- Invoice Address -->
+        <div class="sm:col-span-2 mt-5">
+            <label for="invoice_add" class="block text-sm font-semibold leading-6 text-gray-900">Invoice Address</label>
+            <div class="mt-2.5">
+                <input type="text" name="invoice_add" id="invoice_add" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></input>
+            </div>
+        </div>
+        <!-- Organisation Address -->
+        <div class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2 mt-5">
+            <div>
+                <label for="city" class="block text-sm font-semibold leading-6 text-gray-900">City</label>
                 <div class="mt-2.5">
-                    <input type="text" name="fas_name" id="fas_name" autocomplete="fas_name" placeholder="Fascia Name (written on Stall)" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                    <input type="text" name="city" id="city" placeholder="City" autocomplete="city" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                 </div>
             </div>
-        <br>
-        <div class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-3">
+            <div>
+                <label for="state" class="block text-sm font-semibold leading-6 text-gray-900">State</label>
+                <div class="mt-2.5">
+                    <input type="text" name="state" id="state" placeholder="State" autocomplete="state" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                </div>
+            </div>
+            <div>
+                <label for="country" class="block text-sm font-semibold leading-6 text-gray-900">Country</label>
+                <div class="mt-2.5">
+                    <select id="country" name="country" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        <option value="">Select Country</option>
+
+                        @foreach ($countries as $country)
+                            <option value="{{ $country }}">{{ $country }}</option>
+                        @endforeach
+                    </select>
+
+                </div>
+            </div>
+
+            <div>
+                <label for="zip" class="block text-sm font-semibold leading-6 text-gray-900">Zip Code</label>
+                <div class="mt-2.5">
+                    <input type="text" name="zip" id="zip" placeholder="Zip Code" autocomplete="zip" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Number with select of country dial code then number -->
+        <div class="sm:col-span-2 mt-5">
+            <label for="con_number" class="block text-sm font-semibold leading-6 text-gray-900">Contact Number</label>
+            <div class="relative mt-2.5">
+                <div class="absolute inset-y-0 left-0 flex items-center">
+                    <label for="country" class="sr-only">Country</label>
+
+                    <select id="country" name="country" class="h-full rounded-md border-0 bg-transparent bg-none py-0 pl-4 pr-9 text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm">
+                        <option>IN</option>
+                        <option>CA</option>
+                        <option>EU</option>
+                        <option>US</option>
+                    </select>
+                    <svg class="pointer-events-none absolute right-3 top-0 h-full w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                    </svg>
+                </div>
+                <input type="tel" name="con_number" id="con_number" autocomplete="tel" class="block w-full rounded-md border-0 px-3.5 py-2 pl-20 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+            </div>
+        </div>
+
+        <!-- GST Registered or not dropdown if registered then enter GST number -->
+        <div class="sm:col-span-2 mt-5">
+            <label for="gst_reg" class="block text-sm font-semibold leading-6 text-gray-900">GST Registered</label>
+            <div class="mt-2.5">
+                <select name="gst_reg" id="gst_reg" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                    <option value="">Select</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select>
+                <div id="gst_number_div" style="display: none;" class="sm:col-span-2 mt-5">
+                    <label for="gst_number" class="block text-sm font-semibold leading-6 text-gray-900">GST Number</label>
+                    <div class="mt-2.5">
+                        <input type="text" name="gst_number" id="gst_number" autocomplete="gst_number" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- PAN Number -->
+        <div class="sm:col-span-2 mt-5">
+            <label for="pan_number" class="block text-sm font-semibold leading-6 text-gray-900">PAN Number</label>
+            <div class="mt-2.5">
+                <input type="text" name="pan_number" id="pan_number" autocomplete="pan_number" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+            </div>
+        </div>
+        <div class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-3 mt-5">
             <div>
                 <label for="cp_title" class="block text-sm font-semibold leading-6 text-gray-900">Title</label>
                 <div class="mt-2.5">
@@ -59,120 +224,93 @@
                 </div>
             </div>
         </div>
-        <br>
-        {{-- <div class="sm:col-span-2">
+        <div class="sm:col-span-2 mt-5">
             <label for="cp_design" class="block text-sm font-semibold leading-6 text-gray-900">Contact Person Designation *</label>
             <div class="mt-2.5">
                 <input type="text" name="cp_design" id="cp_design" autocomplete="cp_design" placeholder="Contact Person Designation" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
             </div>
         </div>
-        <br> --}}
-        <div class="sm:col-span-2">
-            <label for="cp_design" class="block text-sm font-semibold leading-6 text-gray-900">Contact Person Designation *</label>
+        <!-- Contact Person Email -->
+        <div class="sm:col-span-2 mt-5">
+            <label for="cp_email" class="block text-sm font-semibold leading-6 text-gray-900">Contact Person Email *</label>
             <div class="mt-2.5">
-                <input type="text" name="cp_design" id="cp_design" autocomplete="cp_design" placeholder="Contact Person Designation" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                <input type="email" name="cp_email" id="cp_email" autocomplete="cp_email" placeholder="Contact Person Email" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
             </div>
         </div>
-        <br>
-        <div class="sm:col-span-2">
-            <label for="org_add" class="block text-sm font-semibold leading-6 text-gray-900">Organisation Address</label>
-            <div class="mt-2.5">
-                <textarea name="org_add" id="org_add" rows="4" placeholder="Organisation Address" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
-            </div>
-        </div>
-        <br>
-        <div class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
-            <div>
-                <label for="city" class="block text-sm font-semibold leading-6 text-gray-900">City</label>
-                <div class="mt-2.5">
-                    <input type="text" name="city" id="city" placeholder="City" autocomplete="city" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                </div>
-            </div>
-            <div>
-                <label for="state" class="block text-sm font-semibold leading-6 text-gray-900">State</label>
-                <div class="mt-2.5">
-                    <input type="text" name="state" id="state" placeholder="State" autocomplete="state" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                </div>
-            </div>
-            <div>
-                <label for="country" class="block text-sm font-semibold leading-6 text-gray-900">Country</label>
-                <div class="mt-2.5">
-                    <select id="country" name="country" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                        <option value="">Select Country</option>
-                        
-                        @foreach ($countries as $country)
-                            <option value="{{ $country }}">{{ $country }}</option>
-                        @endforeach
+
+        <!-- Contact Person Contact Number -->
+        <div class="sm:col-span-2 mt-5">
+            <label for="cp_con_number" class="block text-sm font-semibold leading-6 text-gray-900">Contact Person Contact Number *</label>
+            <div class="relative mt-2.5">
+                <div class="absolute inset-y-0 left-0 flex items-center">
+                    <label for="country" class="sr-only">Country</label>
+
+                    <select id="country" name="country" class="h-full rounded-md border-0 bg-transparent bg-none py-0 pl-4 pr-9 text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm">
+                        <option>IN</option>
+                        <option>CA</option>
+                        <option>EU</option>
+                        <option>US</option>
                     </select>
-
-
+                    <svg class="pointer-events-none absolute right-3 top-0 h-full w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                    </svg>
                 </div>
+                <input type="tel" name="cp_con_number" id="cp_con_number" autocomplete="tel" placeholder="Contact Person Contact Number" class="block w-full rounded-md border-0 px-3.5 py-2 pl-20 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
             </div>
-
-            <div>
-                <label for="zip" class="block text-sm font-semibold leading-6 text-gray-900">Zip Code</label>
-                <div class="mt-2.5">
-                    <input type="text" name="zip" id="zip" placeholder="Zip Code" autocomplete="zip" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                </div>
         </div>
+
+        <!-- Website -->
+        <div class="sm:col-span-2 mt-5">
+            <label for="website" class="block text-sm font-semibold leading-6 text-gray-900">Website</label>
+            <div class="mt-2.5">
+                <input type="text" name="website" id="website" autocomplete="website" placeholder="Website" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+            </div>
         </div>
-        <br>
 
-        <div class="sm:col-span-2">
-                <label for="email" class="block text-sm font-semibold leading-6 text-gray-900">Email</label>
-                <div class="mt-2.5">
-                    <input type="email" name="email" id="email" autocomplete="email" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+        <!-- Payment Mode Radio button as CCAvenue
+        CCAvenue Payment - Credit Card / Debit Card / Net Banking / Google Pay / PhonePe / Paytm
+Please Note: 3% processing charges is applicable for CCAVenue payment mode
+-->
+        <div class="sm:col-span-2 mt-5">
+            <label for="payment_mode" class="block text-sm font-semibold leading-6 text-gray-900">Payment Mode</label>
+            <div class="mt-2.5">
+                <div class="flex items
+                ">
+                    <input type="radio" name="payment_mode" id="payment_mode" value="CCAvenue" class="rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                    &nbsp;&nbsp;<label for="payment_mode" class="block text
+                    -sm font-semibold leading-6 text-gray-900">CCAvenue Payment - Credit Card / Debit Card / Net Banking / UPI</label>
                 </div>
+                <p class="text-sm text-gray-600 mt-2">Please Note: 3% processing charges is applicable for CCAVenue payment mode</p>
             </div>
-        <br>
-        <div class="sm:col-span-2">
-                <label for="con_number" class="block text-sm font-semibold leading-6 text-gray-900">Contact number</label>
-                <div class="relative mt-2.5">
-                    <div class="absolute inset-y-0 left-0 flex items-center">
-                        <label for="country" class="sr-only">Country</label>
+        </div>
 
-                        <select id="country" name="country" class="h-full rounded-md border-0 bg-transparent bg-none py-0 pl-4 pr-9 text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm">
-                            <option>IN</option>
-                            <option>CA</option>
-                            <option>EU</option>
-                            <option>US</option>
-                        </select>
-                        <svg class="pointer-events-none absolute right-3 top-0 h-full w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                            <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
-                        </svg>
-                    </div>
-                    <input type="tel" name="con_number" id="con_number" autocomplete="tel" class="block w-full rounded-md border-0 px-3.5 py-2 pl-20 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+        <!-- Captcha -->
+        <div class="sm:col-span-2 mt-5">
+            <label for="captcha" class="block text-sm font-semibold leading-6 text-gray-900">Captcha</label>
+            <div class="mt-2.5 flex">
+                <div class="w-1/2">
+                    <input type="text" name="captcha" id="captcha" autocomplete="captcha" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                 </div>
-            </div>
-        <br>
-        <div class="sm:col-span-2">
-                <label for="profile" class="block text-sm font-semibold leading-6 text-gray-900">Profile</label>
-                <div class="mt-2.5">
-                    <textarea name="profile" id="profile" rows="4" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
-                </div>
-            </div>
-        <br>
-          {{-- @csrf --}}
-    {{-- <img src="{{ captcha_src('default') }}" alt="captcha">
-    <input type="text" name="captcha"> --}}
-    <br>
-            <div class="flex gap-x-4 sm:col-span-2">
-                <div class="flex h-6 items-center">
-                    <!-- Enabled: "bg-indigo-600", Not Enabled: "bg-gray-200" -->
-                    {{-- <button type="button" class="bg-indigo-600 flex w-8 flex-none cursor-pointer rounded-full p-px ring-1 ring-inset ring-gray-900/5 transition-colors duration-200 ease-in-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" role="switch" aria-checked="false" aria-labelledby="switch-1-label">
-                        <span class="sr-only">Agree to policies</span>
-                        <!-- Enabled: "translate-x-3.5", Not Enabled: "translate-x-0" -->
-                        <span aria-hidden="true" class="translate-x-3.5 h-4 w-4 transform rounded-full bg-white shadow-sm ring-1 ring-gray-900/5 transition duration-200 ease-in-out"></span>
-                    </button> --}}
+                &nbsp;&nbsp;
+                <div class="w-1/2">
+                    <img src="{{ captcha_src('default') }}" alt="captcha">
                 </div>
 
-                <label class="text-sm leading-6 text-gray-600" id="switch-1-label">
-                    By selecting this, you agree to our
-                    <a href="#" class="font-semibold text-indigo-600">privacy&nbsp;policy</a>.
-                </label>
+
             </div>
+        </div>
         <div class="mt-10">
             <button type="submit" class="block w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Next</button>
         </div>
     </form>
 </div>
+
+<script>
+    document.getElementById('gst_reg').addEventListener('change', function() {
+        if (this.value === 'yes') {
+            document.getElementById('gst_number_div').style.display = 'block';
+        } else {
+            document.getElementById('gst_number_div').style.display = 'none';
+        }
+    });
+</script>

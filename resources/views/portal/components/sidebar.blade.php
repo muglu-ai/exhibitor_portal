@@ -8,5 +8,10 @@
         </div>
 
 
-        <img src="{{asset('logos/banner.png')}}" alt="">
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <button type="submit" style="background: none;border: none;padding: 0;">
+                <img src="{{asset('logos/banner.png')}}" alt="">
+            </button>
+        </form>
     </div>
