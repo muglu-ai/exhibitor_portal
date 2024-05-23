@@ -2,7 +2,7 @@
 @include('portal.components.sidebar')
 
 @php
-$total_sm_assigned = 3;
+$total_sm_assigned = 4;
 $max_sm_allowed = 5;
 @endphp
 

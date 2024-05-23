@@ -1,7 +1,7 @@
 @include('portal.components.header')
 @include('portal.components.sidebar')
 @php
-$total_delegates_allotted = 2; // Example value, change this accordingly
+$total_delegates_allotted = 3; // Example value, change this accordingly
 $delegateCount = 0; // Define delegate count variable
 @endphp
 <div class="dash-content">
