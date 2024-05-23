@@ -15,7 +15,7 @@
             </button>
         </div> --}}
         <div class="mx-auto max-w-2xl text-center">
-            <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Exhibitor Directory Information</h2>
+            <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Exhibitor Registration Form</h2>
             <p class="mt-2 text-lg leading-8 text-gray-600">Please provide Information about your Company.</p>
         </div>
     </nav>

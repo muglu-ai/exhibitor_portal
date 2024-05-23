@@ -29,13 +29,13 @@ class DelegateController extends Controller
      */
     public function show()
     {
-       
+
         $countries2 = Country::paginate(10);
-        $countries = CountryListFacade::getList('en');
+       // $countries = CountryListFacade::getList('en');
         $organisation = $this->organisation();
         $sector = $this->sectorList();
         $delegates = $this->no_of_delegates();
-        return view('delegate.create',['countries2' => $countries2], compact('countries', 'organisation','sector','delegates'));
+        return view('delegate.create',['countries2' => $countries2], compact( 'organisation','sector','delegates'));
     }
 
     /*
@@ -43,11 +43,11 @@ class DelegateController extends Controller
     */
     private function organisation()
     {
-        $organisation = array('Startup' => 'Startup', 'MSME' => 'MSME', 'Corporate / Industry' => 'Corporate / Industry', 
-        'R&D Labs' => 'R&D Labs',  'Investors' => 'Investors', 'Government' => 'Government', 'Industry Associations' => 'Industry Associations', 
+        $organisation = array('Startup' => 'Startup', 'MSME' => 'MSME', 'Corporate / Industry' => 'Corporate / Industry',
+        'R&D Labs' => 'R&D Labs',  'Investors' => 'Investors', 'Government' => 'Government', 'Industry Associations' => 'Industry Associations',
         'Consulting' => 'Consulting', 'Trade Mission' => 'Trade Mission', 'Others' => 'Others');
         return $organisation;
-    } 
+    }
     /**
      * List of Sectors.
      */

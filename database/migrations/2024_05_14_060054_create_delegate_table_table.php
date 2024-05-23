@@ -15,7 +15,7 @@ return new class extends Migration
 
         Schema::create('delegate_table', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('exhibitor_id',15)->nullable();
+            $table->string('exhibitor_id',30)->nullable();
             $table->string('sector',150)->nullable();
             $table->string('org_type',150)->nullable();
             $table->string('delegates_count',5)->nullable();
@@ -71,7 +71,7 @@ return new class extends Migration
             $table->string('del5_designation',250)->nullable();
             $table->string('del5_contact',15)->nullable();
             $table->string('del5_type',250)->nullable();
-            
+
             $table->string('del_govt5', 25)->nullable();
             $table->string('del_govno5', 50)->nullable();
             $table->string('del6_name',250)->nullable();
@@ -79,7 +79,7 @@ return new class extends Migration
             $table->string('del6_designation',250)->nullable();
             $table->string('del6_type',250)->nullable();
             $table->string('del6_contact',15)->nullable();
-            
+
             $table->string('del_govt6', 25)->nullable();
             $table->string('del_govno6', 50)->nullable();
             $table->string('reg_id',15)->nullable();

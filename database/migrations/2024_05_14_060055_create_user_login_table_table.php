@@ -15,9 +15,9 @@ return new class extends Migration
 
         Schema::create('user_login_table', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('exhibitor_id',15);
-            $table->string('login_email',250);
-            $table->foreign('login_email',250)->references('cp_email')->on('exhibitor_reg_table');
+            $table->string('exhibitor_id',30);
+            $table->string('email',250);
+            $table->foreign('email',250)->references('cp_email')->on('exhibitor_reg_table');
             $table->string('password');
             $table->foreign('exhibitor_id')->references('exhibitor_id')->on('exhibitor_reg_table');
             $table->string('captcha',50)->nullable();

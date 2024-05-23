@@ -15,7 +15,7 @@ return new class extends Migration
 
         Schema::create('exhibitor_reg_table', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('exhibitor_id',15)->index();
+            $table->string('exhibitor_id',30)->index();
             $table->string('org_name',250)->nullable();
             $table->string('org_type',250)->nullable();
             $table->text('org_reg_certificate')->nullable();
@@ -41,7 +41,7 @@ return new class extends Migration
             $table->string('sales_executive',250)->nullable();
             $table->string('reg_id',50)->nullable();
             $table->string('user_type',250)->nullable();
-            $table->string('exhibiting_under',250)->nullable(); 
+            $table->string('exhibiting_under',250)->nullable();
             $table->string('reg_date',250)->nullable();
             $table->string('tin_no',100)->nullable();
             $table->string('currency',100)->nullable();
