@@ -65,6 +65,6 @@ Route::put('portal/editExhibitorDelegate', [App\Http\Controllers\ExhibitorDelega
 Route::post('portal/submitExhibitorDelegateData', [App\Http\Controllers\ExhibitorDelegatesController::class, 'postExhibitorDelegate'])->name('post_ExhibitorDelegate');
 });
 //Portal Login post
-//Route::get('/portal', function () {
-//    return view('portal.pages.dashboard');
-//})->middleware(['auth', 'verified'])->name('portal');
+Route::get('/portal', function () {
+   return view('portal.pages.dashboard');
+})->middleware(['auth', 'verified'])->name('portal');
