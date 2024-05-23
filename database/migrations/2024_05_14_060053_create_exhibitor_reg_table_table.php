@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('exhibitor_id',30)->index();
             $table->string('org_name',250)->nullable();
             $table->string('org_type',250)->nullable();
+            $table->string('sector',100)->nullable();
             $table->text('org_reg_certificate')->nullable();
             $table->string('booth_size',250)->nullable();
             $table->string('booth_area',250)->nullable();

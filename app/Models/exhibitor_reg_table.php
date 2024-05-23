@@ -13,6 +13,7 @@ class exhibitor_reg_table extends Model
         'exhibitor_id',
         'org_name',
         'org_type',
+        'sector',
         'org_reg_certificate',
         'booth_size',
         'booth_area',

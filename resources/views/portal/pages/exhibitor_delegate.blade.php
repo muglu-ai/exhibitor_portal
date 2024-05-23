@@ -1,7 +1,8 @@
 @include('portal.components.header')
 @include('portal.components.sidebar')
 @php
-$total_delegates_assigned = 3; // Example value, change this accordingly
+$total_delegates_allotted = 3; // Example value, change this accordingly
+$delegateCount = 0; // Define delegate count variable
 @endphp
 <div class="dash-content">
     <div class="overview">
@@ -10,15 +11,14 @@ $total_delegates_assigned = 3; // Example value, change this accordingly
         @if ($exhibitordel)
         <div class="exhibitor-details">
             <p><strong>Exhibitor ID:</strong> {{ $exhibitordel->exhibitor_id }}</p>
-            <p><strong>Sector:</strong> {{ $exhibitordel->sector }}</p>
-            <p><strong>Org Type:</strong> {{ $exhibitordel->org_type }}</p>
-            <p><strong>Org Name:</strong> {{ $exhibitordel->organization_name }}</p>
             @if ($exhibitoradd)
+            <p><strong>Org Type:</strong> {{ $exhibitoradd->org_type }}</p>
+            <p><strong>Org Name:</strong> {{ $exhibitoradd->org_name }}</p>
+            <p><strong>Sector:</strong> {{ $exhibitoradd->sector }}</p>
             <p><strong>Name:</strong> {{ $exhibitoradd->cp_name }}</p>
             <p><strong>Email:</strong> {{ $exhibitoradd->cp_email }}</p>
             <p><strong>Phone:</strong> {{ $exhibitoradd->cp_mobile }}</p>
             @endif
-
         </div>
 
         <table class="table table-bordered mt-3">
@@ -33,37 +33,40 @@ $total_delegates_assigned = 3; // Example value, change this accordingly
                 </tr>
             </thead>
             <tbody>
-                <!-- Delegates Rows -->
-                @for ($i = 1; $i <= 6; $i++) @if ($exhibitordel->{'del' . $i . '_name'} != null)
-                    <tr class="delegate">
-                        <td>{{ $exhibitordel->{'del' . $i . '_name'} }}</td>
-                        <td>{{ $exhibitordel->{'del' . $i . '_email'} }}</td>
-                        <td>{{ $exhibitordel->{'del' . $i . '_contact'} }}</td>
-                        <td>{{ $exhibitordel->{'del' . $i . '_designation'} }}</td>
-                        <td>{{ $exhibitordel->{'del' . $i . '_govt_id_type'} }}</td>
-                        <td>{{ $exhibitordel->{'del' . $i . '_govt_id_number'} }}</td>
-                    </tr>
-                    @else
-                    @break
+                @php
+                    $delegateCount = 0;
+                @endphp
+                @for ($i = 1; $i <= $total_delegates_allotted; $i++)
+                    @if (!empty($exhibitordel->{'del' . $i . '_name'}))
+                        @php
+                            $delegateCount++;
+                        @endphp
+                        <tr class="delegate">
+                            <td>{{ $exhibitordel->{'del' . $i . '_name'} }}</td>
+                            <td>{{ $exhibitordel->{'del' . $i . '_email'} }}</td>
+                            <td>{{ $exhibitordel->{'del' . $i . '_contact'} }}</td>
+                            <td>{{ $exhibitordel->{'del' . $i . '_designation'} }}</td>
+                            <td>{{ $exhibitordel->{'del' . $i . '_govtid_type'} }}</td>
+                            <td>{{ $exhibitordel->{'del' . $i . '_govtid_no'} }}</td>
+                        </tr>
                     @endif
-                    @endfor
+                @endfor
             </tbody>
-
         </table>
-        <button class="btn btn-primary" id="addDelegateButton" {{ $total_delegates_assigned >= 6 ? 'disabled' : '' }}>
-            <i class="fas fa-plus"></i> Add Delegate
-        </button>
-        @else
-        <div class="text-center mt-3">No exhibitor found</div>
         @endif
     </div>
 </div>
 
+@if ($delegateCount < $total_delegates_allotted)
+<button class="btn btn-primary" id="addDelegateButton">
+    <i class="fas fa-plus"></i> Add Delegate
+</button>
+@endif
 
 <div id="delegateFormContainer" style="display: none; margin-top: 20px;">
     <form action="{{ route('post_ExhibitorDelegate') }}" method="POST" id="delegateForm">
         @csrf
-        <input type="hidden" name="exhibitor_id" value="EXH1234">
+        <input type="hidden" name="exhibitor_id" value="{{ $exhibitordel ? $exhibitordel->exhibitor_id : 'EXH1234' }}">
         <div class="delegateEntry">
             <h5>Delegate Person</h5>
             <div class="form-group">
@@ -83,15 +86,15 @@ $total_delegates_assigned = 3; // Example value, change this accordingly
                 <input type="text" class="form-control" id="del_designation" name="del_designation" required>
             </div>
             <div class="form-group">
-                <label for="del_govt_id_type">Govt ID Type</label>
-                <input type="text" class="form-control" id="del_govt_id_type" name="del_govt_id_type" required>
+                <label for="del_govtid_type">Govt ID Type</label>
+                <input type="text" class="form-control" id="del_govtid_type" name="del_govtid_type" required>
             </div>
             <div class="form-group">
-                <label for="del_govt_id_number">Govt ID Number</label>
-                <input type="text" class="form-control" id="del_govt_id_number" name="del_govt_id_number" required>
+                <label for="del_govtid_no">Govt ID Number</label>
+                <input type="text" class="form-control" id="del_govtid_no" name="del_govtid_no" required>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary">Save changes</button>
+        <button type="submit" class="btn btn-primary" id="saveDelegateButton">Save changes</button>
     </form>
 </div>
 
@@ -139,6 +142,7 @@ $total_delegates_assigned = 3; // Example value, change this accordingly
         }
     });
 </script>
+
 
 <style>
     .table {
