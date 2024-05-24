@@ -14,7 +14,7 @@ class user_login_table extends Model implements AuthenticatableContract
 
     protected $table = 'user_login_table'; // Explicitly specify the table name
 
-    protected $fillable = ['exhibitor_id', 'email', 'password'];
+    protected $fillable = ['exhibitor_id', 'email', 'password','password_actual','captcha','status','created_At','updated_At'];
 
     public function exhibitor()
     {

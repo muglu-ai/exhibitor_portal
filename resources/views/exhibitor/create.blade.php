@@ -2,7 +2,7 @@
 @include('layouts.form_navbar')
 
 <div class="isolate bg-white px-6 py-24 sm:py-32 lg:px-8" style="
-    padding-top: 20px;">
+    padding-top: 20px; padding-bottom: 1px;">
     <div class="absolute inset-x-0 top-[-10rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[-20rem]" aria-hidden="true">
         <div class="relative left-1/2 -z-10 aspect-[1155/678] w-[36.125rem] max-w-none -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-40rem)] sm:w-[72.1875rem]" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)">
 
@@ -20,13 +20,13 @@ OPTION	BOOTH SIZE(SQM)	TOTAL COST IN INR
                     <h2 class="text-3xl font-bold tracking-tight text-indigo-600 dark:text-indigo-400">
                         Exhibition Tariff - StartUp Innovation Zone
                     </h2>
-                    <p class="text-gray-500 dark:text-gray-400 font-medium">
+                    <p class="text-gray-500 font-medium">
                         Choose the tariff option that best suits your needs.
                     </p>
                 </div>
                 <div class="overflow-x-auto">
                     <table class="w-full border-collapse text-left">
-                        <thead class="bg-indigo-600 text-white dark:bg-indigo-400 dark:text-gray-950">
+                        <thead class="bg-indigo-600 text-white">
                         <tr>
                             <th class="px-4 py-3 font-medium">OPTION</th>
                             <th class="px-4 py-3 font-medium">BOOTH SIZE (SQM)</th>
@@ -34,32 +34,32 @@ OPTION	BOOTH SIZE(SQM)	TOTAL COST IN INR
                         </tr>
                         </thead>
                         <tbody>
-                        <tr class="border-b border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-800">
-                            <td class="px-4 py-3 font-medium text-indigo-600 dark:text-indigo-400">Option 1</td>
-                            <td class="px-4 py-3">6</td>
-                            <td class="px-4 py-3">39,999</td>
+                        <tr class="border-b border-gray-200 dark:border-gray-700 bg-gray-100">
+                            <td class="px-4 py-3 font-medium text-indigo-600 dark:text-indigo-400 text-center">1</td>
+                            <td class="px-4 py-3 text-center">6</td>
+                            <td class="px-4 py-3 text-center">39,999</td>
                         </tr>
-                        <tr class="border-b border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-800">
-                            <td class="px-4 py-3 font-medium text-indigo-600 dark:text-indigo-400">Option 2</td>
-                            <td class="px-4 py-3">9</td>
-                            <td class="px-4 py-3">59,999</td>
+                        <tr class="border-b border-gray-200 dark:border-gray-700 bg-gray-100">
+                            <td class="px-4 py-3 font-medium text-indigo-600 dark:text-indigo-400 text-center">2</td>
+                            <td class="px-4 py-3 text-center">9</td>
+                            <td class="px-4 py-3 text-center">59,999</td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
+
         </section>
     </div>
-</div>
 
 
-    <form action="{{ route('exhibitor.submit') }}" method="POST" class="mx-auto mt-16 max-w-xl sm:mt-20" style="
-        margin-top: 20px;">
+
+    <form action="{{ route('exhibitor.submit') }}" method="POST" class="mx-auto mt-5 max-w-xl sm:mt-8" enctype="multipart/form-data">
          @csrf
 
         <!--Select booth size radio button either 6sqm or 9sqm -->
         <div class="sm:col-span-2">
-            <label for="booth_size" class="block text-sm font-semibold leading-6 text-gray-900">Booth Size</label>
+            <label for="booth_size" class="block text-sm font-semibold leading-6 text-gray-900">Select Booth Size</label>
         <div class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
             <div class="mt-2.5 flex justify-between">
     <div class="flex items-center">
@@ -76,7 +76,7 @@ OPTION	BOOTH SIZE(SQM)	TOTAL COST IN INR
 
         <!-- dropdown of sector  to select one of the sector -->
         <div class="sm:col-span-2 mt-5">
-            <label for="sector" class="block text-sm font-semibold leading-6 text-gray-900">Sector</label>
+            <label for="sector" class="block text-sm font-semibold leading-6 text-gray-900">Select Sector</label>
             <div class="mt-2.5">
                 <select name="sector" id="sector" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                     <option value="">Select Sector</option>
@@ -110,7 +110,7 @@ OPTION	BOOTH SIZE(SQM)	TOTAL COST IN INR
         <div class="sm:col-span-2 mt-5">
             <label for="invoice_add" class="block text-sm font-semibold leading-6 text-gray-900">Invoice Address</label>
             <div class="mt-2.5">
-                <input type="text" name="invoice_add" id="invoice_add" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></input>
+                <input type="text" name="invoice_add" id="invoice_add" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">  </input>
             </div>
         </div>
         <!-- Organisation Address -->
@@ -304,6 +304,7 @@ Please Note: 3% processing charges is applicable for CCAVenue payment mode
         </div>
     </form>
 </div>
+
 
 <script>
     document.getElementById('gst_reg').addEventListener('change', function() {
