@@ -13,6 +13,8 @@
 OPTION	BOOTH SIZE(SQM)	TOTAL COST IN INR
 1	6	39,999
 2	9	59,999 -->
+    <div class="container mx-auto max-w-screen-lg">
+        <div class="mt-8 p-8 bg-white border border-gray-300 rounded-lg">
     <div class="max-w-3xl mx-auto">
         <section class="w-full max-w-4xl mx-auto py-12 md:py-16">
             <div class="flex flex-col gap-6">
@@ -63,11 +65,11 @@ OPTION	BOOTH SIZE(SQM)	TOTAL COST IN INR
         <div class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
             <div class="mt-2.5 flex justify-between">
     <div class="flex items-center">
-        <input type="radio" name="booth_size" id="booth_size_6sqm" value="6sqm" class="rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+        <input type="radio" name="booth_size" id="booth_size_6sqm" value="6sqm" class="block text-sm font-medium leading-6 text-gray-900">
         <label for="booth_size_6sqm" class="block text-sm font-semibold leading-6 text-gray-900 ml-2">6sqm</label>
     </div>
     <div class="flex items-center">
-        <input type="radio" name="booth_size" id="booth_size_9sqm" value="9sqm" class="rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+        <input type="radio" name="booth_size" id="booth_size_9sqm" value="9sqm" class="block text-sm font-medium leading-6 text-gray-900">
         <label for="booth_size_9sqm" class="block text-sm font-semibold leading-6 text-gray-900 ml-2">9sqm</label>
     </div>
             </div>
@@ -276,9 +278,9 @@ Please Note: 3% processing charges is applicable for CCAVenue payment mode
             <div class="mt-2.5">
                 <div class="flex items
                 ">
-                    <input type="radio" name="payment_mode" id="payment_mode" value="CCAvenue" class="rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                    &nbsp;&nbsp;<label for="payment_mode" class="block text
-                    -sm font-semibold leading-6 text-gray-900">CCAvenue Payment - Credit Card / Debit Card / Net Banking / UPI</label>
+                    <input type="radio" name="payment_mode" id="payment_mode" checked value="CCAvenue" class="block text-sm font-medium leading-6 text-gray-900">
+                    &nbsp;&nbsp;
+                    <label for="payment_mode" class="block text-sm font-semibold leading-6 text-gray-900" >CCAvenue Payment - Credit Card / Debit Card / Net Banking / UPI</label>
                 </div>
                 <p class="text-sm text-gray-600 mt-2">Please Note: 3% processing charges is applicable for CCAVenue payment mode</p>
             </div>
@@ -303,6 +305,8 @@ Please Note: 3% processing charges is applicable for CCAVenue payment mode
             <button type="submit" class="block w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Next</button>
         </div>
     </form>
+</div>
+    </div>
 </div>
 
 

@@ -31,6 +31,7 @@ require __DIR__.'/auth.php';
 //Route::middleware('guest')->group(function () {
     Route::get('/newExhibitor', [FormController::class, 'form'])->name('exhibitor.create');
     Route::post('/newExhibitorStore', [FormController::class, 'submit'])->name('exhibitor.submit');
+    Route::get('preview', [FormController::class, 'previewExhibitor'])->name('exhibitor.preview');
 // });
 
 

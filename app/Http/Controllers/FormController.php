@@ -143,57 +143,14 @@ class FormController extends Controller
             'exhibitor' => $exhibitor
         ], 201);
 
-        /*Log::info($request->all());
-        $validatedData = $request->validate([
-            'booth_size' => 'required|string',
-            'sector' => 'required|string',
-            'exhibitor_name' => 'required|string',
-            'company_reg' => 'required|file|mimes:pdf',
-            'invoice_add' => 'required|string',
-            'city' => 'required|string',
-            'state' => 'required|string',
-            'country' => 'required|string|size:2',
-            'zip' => 'required|numeric',
-            'con_number' => 'required|numeric',
-            'gst_reg' => 'required|string|in:yes,no',
-            'gst_number' => 'required_if:gst_reg,yes|nullable|numeric',
-            'pan_number' => 'required|alpha_num',
-            'cp_title' => 'required|string',
-            'first_name' => 'required|string',
-            'last_name' => 'required|string',
-            'cp_design' => 'required|string',
-            'cp_email' => 'required|email',
-            'cp_con_number' => 'required|numeric',
-            'website' => 'required|url',
-            'payment_mode' => 'required|string',
-            'captcha' => 'required|captcha',
-        ]);
-        print_r($validatedData);
-        if(!$validatedData){
 
-            return response()->json(['error' => 'Failed to create exhibitor', 'message' => 'Validation failed'] , 400);
-        }
-        // Validate the request data
-        Log::info($validatedData);
+    }
 
-         //generate exhibitor id here
-        $exhibitor_id = 'EXH'.rand(1000,9999);
-         // Add the exhibitor_id to the request data
-        $request->merge(['exhibitor_id' => $exhibitor_id]);
-        Log::info($request->all());
-
-        try {
-            Log::info('try statement', $request->all());
-            $exhibitor = Exhibitors::create($request->validated());
-
-            // Optionally, you can return a success response
-            return response()->json(['message' => 'Exhibitor created successfully', 'exhibitor' => $exhibitor], 201);
-        } catch (\Exception $e) {
-            // Handle any exceptions, such as database errors
-            return response()->json(['error' => 'Failed to create exhibitor', 'message' => $e->getMessage()], 500);
-        }
-        return response()->json(['error' => 'Failed to create exhibitor', 'message' => 'An unknown error occurred'], 500);
-*/
+    //preview exhibitor
+    public function previewExhibitor()
+    {
+//        $exhibitor = exhibitor_reg_table::find($id);
+        return view('exhibitor.preview');
     }
     public function submit2(Request $request)
     {
