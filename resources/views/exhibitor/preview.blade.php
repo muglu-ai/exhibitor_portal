@@ -1,6 +1,10 @@
 @include('layouts.formheader')
 @include('layouts.form_navbar')
 
+@php
+    $exhibitor = session('exhibitor');
+@endphp
+
 <div class="isolate bg-white px-6 py-24 sm:py-32 lg:px-8" style="
     padding-top: 20px; padding-bottom: 1px;">
     <div class="absolute inset-x-0 top-[-10rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[-20rem]" aria-hidden="true">
@@ -35,15 +39,15 @@ Payment Mode
 -->
         <tr class="border-t border-gray-300">
             <td class="py-2 px-4 text-sm font-bold text-gray-800">Association Name:</td>
-            <td class="py-2 px-4 text-sm font-medium text-gray-800">Association Name</td>
+            <td class="py-2 px-4 text-sm font-medium text-gray-800">Startup Exhibitor</td>
         </tr>
         <tr class="border-t border-gray-300">
             <td class="py-2 px-4 text-sm font-bold text-gray-800">Booth Size:</td>
-            <td class="py-2 px-4 text-sm font-medium text-gray-800">10x10</td>
+            <td class="py-2 px-4 text-sm font-medium text-gray-800">{{$exhibitor->exhibitor_id}}</td>
         </tr>
         <tr class="border-t border-gray-300">
             <td class="py-2 px-4 text-sm font-bold text-gray-800">Sector:</td>
-            <td class="py-2 px-4 text-sm font-medium text-gray-800">Sector Name</td>
+            <td class="py-2 px-4 text-sm font-medium text-gray-800">{{$exhibitor->sector}}</td>
         </tr>
         <tr class="border-t border-gray-300">
             <td class="py-2 px-4 text-sm font-bold text-gray-800">Name of Exhibitor:</td>

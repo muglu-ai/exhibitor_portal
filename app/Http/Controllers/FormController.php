@@ -135,22 +135,23 @@ class FormController extends Controller
             'captcha' => $request->captcha,
         ];
         $login = user_login_table::create($loginData);
+        session(['exhibitor_id' => $exhibitor->exhibitor_id]);
+        // Return to previewExhibitor with $exhibitor_id
+        return redirect()->route('preview.exhibitor');
 
 
-        // Return a response
-        return response()->json([
+        /*return response()->json([
             'message' => 'Exhibitor submitted successfully with login details',
             'exhibitor' => $exhibitor
-        ], 201);
-
-
+        ], 201);*/
     }
 
     //preview exhibitor
     public function previewExhibitor()
     {
-//        $exhibitor = exhibitor_reg_table::find($id);
-        return view('exhibitor.preview');
+        $id = session('exhibitor_id');
+        $exhibitor = exhibitor_reg_table::find($id);
+        return view('exhibitor.preview', compact('exhibitor'));
     }
     public function submit2(Request $request)
     {
