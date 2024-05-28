@@ -10,7 +10,7 @@ class StallManningController extends Controller
 {
     public function getStallManning(Request $request)
     {
-        $exhibitor_id = 'EXH1234';
+        $exhibitor_id = $request->session()->get('exhibitor_id');
         // fetch all data of exhibitor where exhibitor_id is given in the request
         $exhibitorsm = exhibitor_stall_manning::where('exhibitor_id', $exhibitor_id)->first();
 

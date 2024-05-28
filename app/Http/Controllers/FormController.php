@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Exhibitor;
-use App\Models\exhibitor_reg_table;
-use App\Models\user_login_table;
+use App\Models\exhibitor_reg_details;
+use App\Models\user_login_details;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Monarobase\CountryList\CountryListFacade;
@@ -123,10 +123,10 @@ class FormController extends Controller
         ];
 
         // Create a new exhibitor record
-        $exhibitor = exhibitor_reg_table::create($exhibitorData);
+        $exhibitor = exhibitor_reg_details::create($exhibitorData);
         //generate random password of 8 characters
         $password = substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789') , 0 , 8 );
-        //create login details for exhibitor in user_login_table
+        //create login details for exhibitor in user_login_details
         $loginData = [
             'exhibitor_id' => $exhibitor_id,
             'email' => $request->cp_email,
@@ -134,7 +134,7 @@ class FormController extends Controller
             'password_actual'=> $password,
             'captcha' => $request->captcha,
         ];
-        $login = user_login_table::create($loginData);
+        $login = user_login_details::create($loginData);
 
 
         // Return a response

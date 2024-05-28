@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class exhibitor_reg_table extends Model
+class exhibitor_reg_details extends Model
 {
-    protected $table = 'exhibitor_reg_table';
+    protected $table = 'exhibitor_reg_details';
 
     public $fillable = [
         'exhibitor_id',
@@ -24,7 +24,9 @@ class exhibitor_reg_table extends Model
         'state',
         'country',
         'zip_code',
-        'cp_name',
+        'cp_title',
+        'cp_fname',
+        'cp_lname',
         'cp_email',
         'cp_designation',
         'cp_mobile',
@@ -65,6 +67,10 @@ class exhibitor_reg_table extends Model
         'event_name',
         'gst_state',
         'event_year',
+        'sm_count',
+        'delegate_alloted',
+        'service_req',
+        'can_invite',
 ];
     public function exhibitor()
     {

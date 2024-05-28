@@ -11,7 +11,7 @@ class Exhibitor extends Model
      *
      * @var array
      */
-    protected $table = 'delegate_table';
+    protected $table = 'delegate_org_details';
     protected $fillable = [
         'exhibitor_id',
         'exhibitor_name',

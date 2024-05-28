@@ -12,6 +12,8 @@ class promocode_table extends Model
     protected $fillable = [
         'promocode_organization',
         'promo_code',
+        'exhibitor_count',
+        'delegate_count',
         'discount',
         'total_count',
         'total_used',

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('exhibitor_directory_table', function (Blueprint $table) {
+        Schema::create('exhibitor_directory_details', function (Blueprint $table) {
             $table->increments('id');
             $table->string('exhibitor_id',30);
             $table->string('org_name',250)->nullable();
@@ -24,7 +24,7 @@ return new class extends Migration
             $table->timestamp('created_At')->nullable();
             $table->timestamp('updated_At')->nullable();
 
-            $table->foreign('exhibitor_id')->references('exhibitor_id')->on('exhibitor_reg_table');
+            $table->foreign('exhibitor_id')->references('exhibitor_id')->on('exhibitor_reg_details');
         });
 
         Schema::enableForeignKeyConstraints();
@@ -35,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('exhibitor_directory_table');
+        Schema::dropIfExists('exhibitor_directory_details');
     }
 };

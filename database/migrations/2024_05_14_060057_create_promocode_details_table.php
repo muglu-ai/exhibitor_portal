@@ -13,10 +13,12 @@ return new class extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('promocode_table', function (Blueprint $table) {
+        Schema::create('promocode_details', function (Blueprint $table) {
             $table->increments('id');
             $table->string('promocode_organization')->index(); // Adding index to the column
             $table->string('promo_code')->nullable();
+            $table->string('exhibitor_count')->nullable();
+            $table->string('delegate_count')->nullable();
             $table->string('discount')->nullable();
             $table->string('total_count')->nullable();
             $table->string('total_used')->nullable();
@@ -33,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('promocode_table');
+        Schema::dropIfExists('promocode_details');
     }
 };
