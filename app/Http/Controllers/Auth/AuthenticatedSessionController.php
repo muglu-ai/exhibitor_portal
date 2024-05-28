@@ -18,8 +18,6 @@ class AuthenticatedSessionController extends Controller
      */
     public function create(): View
     {
-//        $user = Auth::user();
-
         return view('auth.login');
     }
 
@@ -28,16 +26,22 @@ class AuthenticatedSessionController extends Controller
      * @throws ValidationException
      */
     public function store(LoginRequest $request): RedirectResponse
-
     {
-
-        Log::info('Login request' . $request);
+        // Authenticate the user
         $request->authenticate();
 
+        // Fetch the authenticated user
+        $user = Auth::user();
+
+        // Store exhibitor_id in session if user exists and has the field
+        if ($user && $user->exhibitor_id) {
+            $request->session()->put('exhibitor_id', $user->exhibitor_id);
+        }
+
+        // Regenerate session
         $request->session()->regenerate();
 
-//        $user = Auth::user();
-
+        // Redirect to intended URL
         return redirect()->intended(route('portal', absolute: false ));
     }
 

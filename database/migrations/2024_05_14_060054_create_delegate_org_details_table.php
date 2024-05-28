@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('delegate_table', function (Blueprint $table) {
+        Schema::create('delegate_org_details', function (Blueprint $table) {
             $table->increments('id');
             $table->string('exhibitor_id',30)->nullable();
+            $table->string('delegate_id',30)->index();
             $table->string('sector',150)->nullable();
             $table->string('org_type',150)->nullable();
             $table->string('delegates_count',5)->nullable();
@@ -29,7 +30,9 @@ return new class extends Migration
             $table->string('state',150)->nullable();
             $table->string('country',150)->nullable();
             $table->string('zip_code',15)->nullable();
-            $table->string('cp_name', 250)->nullable();
+            $table->string('cp_title', 30)->nullable();
+            $table->string('cp_fname', 250)->nullable();
+            $table->string('cp_lname', 250)->nullable();
             $table->string('cp_email', 250)->nullable();
             $table->string('cp_contact', 15)->nullable();
             $table->string('gst_details',5)->nullable();
@@ -38,48 +41,6 @@ return new class extends Migration
             $table->string('pan_number',15)->nullable();
             $table->string('gst_state',50)->nullable();
             $table->string('group_type', 20)->nullable();
-            $table->string('del1_name',250)->nullable();
-            $table->string('del1_email',250)->nullable();
-            $table->string('del1_designation',250)->nullable();
-            $table->string('del1_contact',15)->nullable();
-            $table->string('del1_type',250)->nullable();
-            $table->string('del1_govtid_type', 25)->nullable();
-            $table->string('del1_govtid_no', 50)->nullable();
-            $table->string('del2_name',250)->nullable();
-            $table->string('del2_email',250)->nullable();
-            $table->string('del2_designation',250)->nullable();
-            $table->string('del2_contact',15)->nullable();
-            $table->string('del2_type',250)->nullable();
-            $table->string('del2_govtid_type', 25)->nullable();
-            $table->string('del2_govtid_no', 50)->nullable();
-            $table->string('del3_name',250)->nullable();
-            $table->string('del3_email',250)->nullable();
-            $table->string('del3_designation',250)->nullable();
-            $table->string('del3_contact',15)->nullable();
-            $table->string('del3_type',250)->nullable();
-            $table->string('del3_govtid_type', 25)->nullable();
-            $table->string('del3_govtid_no', 50)->nullable();
-            $table->string('del4_name',250)->nullable();
-            $table->string('del4_email',250)->nullable();
-            $table->string('del4_designation',250)->nullable();
-            $table->string('del4_contact',15)->nullable();
-            $table->string('del4_type',250)->nullable();
-            $table->string('del4_govtid_type', 25)->nullable();
-            $table->string('del4_govtid_no', 50)->nullable();
-            $table->string('del5_name',250)->nullable();
-            $table->string('del5_email',250)->nullable();
-            $table->string('del5_designation',250)->nullable();
-            $table->string('del5_contact',15)->nullable();
-            $table->string('del5_type',250)->nullable();
-            $table->string('del5_govtid_type', 25)->nullable();
-            $table->string('del5_govtid_no', 50)->nullable();
-            $table->string('del6_name',250)->nullable();
-            $table->string('del6_email',250)->nullable();
-            $table->string('del6_designation',250)->nullable();
-            $table->string('del6_type',250)->nullable();
-            $table->string('del6_contact',15)->nullable();
-            $table->string('del6_govtid_type', 25)->nullable();
-            $table->string('del6_govtid_no', 50)->nullable();
             $table->string('reg_id',15)->nullable();
             $table->string('user_type',250)->nullable();
             $table->string('reg_date',250)->nullable();
@@ -109,10 +70,12 @@ return new class extends Migration
             $table->string('assoc_name', 250)->nullable();
             $table->string('event_name', 250)->nullable();
             $table->string('event_year', 4)->nullable();
+            $table->string('delegate_under', 20)->nullable();
             $table->timestamp('created_At')->nullable();
             $table->timestamp('updated_At')->nullable();
             $table->string('token', 100)->nullable();
-            $table->foreign('exhibitor_id')->references('exhibitor_id')->on('exhibitor_reg_table');
+            $table->foreign('exhibitor_id')->references('exhibitor_id')->on('exhibitor_reg_details');
+            $table->foreign('delegate_under')->references('promocode_organization')->on('promocode_details');
         });
 
         Schema::enableForeignKeyConstraints();
@@ -123,6 +86,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('delegate_table');
+        Schema::dropIfExists('delegate_org_details');
     }
 };

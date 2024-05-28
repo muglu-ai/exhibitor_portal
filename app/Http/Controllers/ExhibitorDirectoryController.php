@@ -48,7 +48,7 @@ class ExhibitorDirectoryController extends Controller
     //Update
     public function editExhibitorDirectory(Request $request, $exhibitor_id)
     {
-        $exhibitor_id = "EXH1234";
+        $exhibitor_id = $request->session()->get('exhibitor_id');
         // fetch all data of exhibitor where exhibitor_id is given in the request
         $exhibitor = exhibitor_directory::where('exhibitor_id', $exhibitor_id)->firstOrFail();
         $exhibitor->update($request->all());

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class exhibitor_directory extends Model
 {
     use HasFactory;
-    protected $table = 'exhibitor_directory_table';
+    protected $table = 'exhibitor_directory_details';
 
     protected $fillable = [
         'exhibitor_id',
@@ -22,6 +22,6 @@ class exhibitor_directory extends Model
 
     public function exhibitorReg()
     {
-        return $this->belongsTo(exhibitor_reg_table::class, 'exhibitor_id', 'exhibitor_id');
+        return $this->belongsTo(exhibitor_reg_details::class, 'exhibitor_id', 'exhibitor_id');
     }
 }

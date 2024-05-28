@@ -2,23 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\delegate_personal_info;
 use App\Models\delegate_registration;
 use App\Models\Exhibitor;
-use App\Models\exhibitor_reg_table;
+use App\Models\exhibitor_reg_details;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 class ExhibitorDelegatesController extends Controller
 {
     //Get
-    public function getExhibitorDelegate()
+    public function getExhibitorDelegate(Request $request)
     {
-        $exhibitor_id = 'EXH1234';
+        $exhibitor_id = $request->session()->get('exhibitor_id');
         // fetch all data of exhibitor where exhibitor_id is given in the request
         $exhibitordel = delegate_registration::where('exhibitor_id', $exhibitor_id)->first();
-        $exhibitoradd = exhibitor_reg_table::where('exhibitor_id', $exhibitor_id)->first();
+        $exhibitoradd1 = exhibitor_reg_details::where('exhibitor_id', $exhibitor_id)->first();
+        $exhibitoradd2 = delegate_personal_info::where('exhibitor_id', $exhibitor_id)->first();
 
-        return view('portal.pages.exhibitor_delegate', compact('exhibitordel', 'exhibitoradd'));
+        return view('portal.pages.exhibitor_delegate', compact('exhibitordel', 'exhibitoradd1', 'exhibitoradd2'));
     }
     //Post
     public function postExhibitorDelegate(Request $request)
@@ -72,7 +74,7 @@ class ExhibitorDelegatesController extends Controller
     //Update
     public function updateExhibitorDelegate(Request $request)
     {
-        $exhibitor_id = "EXH_123";
+        $exhibitor_id = $request->session()->get('exhibitor_id');
         $exhibitordel = Exhibitor::where('exhibitor_id', $exhibitor_id)->firstOrFail();
         $exhibitordel->update($request->all());
 

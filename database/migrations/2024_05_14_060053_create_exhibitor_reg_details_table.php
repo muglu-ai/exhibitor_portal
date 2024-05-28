@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('exhibitor_reg_table', function (Blueprint $table) {
+        Schema::create('exhibitor_reg_details', function (Blueprint $table) {
             $table->increments('id');
             $table->string('exhibitor_id',30)->index();
             $table->string('org_name',250)->nullable();
@@ -29,7 +29,9 @@ return new class extends Migration
             $table->string('state',100)->nullable();
             $table->string('country',100)->nullable();
             $table->string('zip_code',12)->nullable();
-            $table->string('cp_name',250)->nullable();
+            $table->string('cp_title',30)->nullable();
+            $table->string('cp_fname',250)->nullable();
+            $table->string('cp_lname',250)->nullable();
             $table->string('cp_email',250)->index();
             $table->string('cp_designation',250)->nullable();
             $table->string('cp_mobile',15)->nullable();
@@ -44,7 +46,7 @@ return new class extends Migration
             $table->string('user_type',250)->nullable();
             $table->string('exhibiting_under',250)->nullable();
             $table->string('reg_date',250)->nullable();
-            $table->string('tin_no',100)->nullable();
+            $table->string('tin_no',100)->index();
             $table->string('currency',100)->nullable();
             $table->string('amt_ext',100)->nullable();
             $table->string('paymode',100)->nullable();
@@ -70,9 +72,13 @@ return new class extends Migration
             $table->text('pg_amt')->nullable();
             $table->string('event_name', 250)->nullable();
             $table->string('event_year', 4)->nullable();
+            $table->string('sm_count', 5)->nullable();
+            $table->string('delegate_alloted', 5)->nullable();
+            $table->string('service_req)', 100)->nullable();
+            $table->string('can_invite)', 10)->nullable();
             $table->timestamp('created_At')->nullable();
             $table->timestamp('updated_At')->nullable();
-            $table->foreign('exhibiting_under')->references('promocode_organization')->on('promocode_table');
+            $table->foreign('exhibiting_under')->references('promocode_organization')->on('promocode_details');
         });
 
         Schema::enableForeignKeyConstraints();
@@ -83,6 +89,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('exhibitor_reg_table');
+        Schema::dropIfExists('exhibitor_reg_details');
     }
 };
