@@ -66,6 +66,9 @@ class exhibitor_reg_table extends Model
         'gst_state',
         'event_year',
 ];
+
+
+
     public function exhibitor()
     {
         return $this->belongsTo(promocode_table::class, 'promocode_organization', 'exhibiting_under');

@@ -14,6 +14,8 @@ use Mews\Captcha\Captcha;
 use App\Http\Requests\ExhibitorRequest;
 use Illuminate\Support\Facades\Log;
 use App\Models\Exhibitors;
+use Illuminate\Support\Facades\Session;
+
 
 
 
@@ -87,6 +89,7 @@ class FormController extends Controller
             ], 422);
         }
 
+
         // Handle file upload
         if ($request->hasFile('company_reg')) {
             $file = $request->file('company_reg');
@@ -97,6 +100,32 @@ class FormController extends Controller
         } else {
             $company_reg = null;
         }
+        //country validation
+        $country = 'INDIAN';
+        $country = $this->currency($country);
+
+
+        //tin number generation
+        $tin = $this->generateTIN();
+
+        //cost generation or selection amt
+        $cost = $this->cost($request->booth_size);
+
+        //tax calculation on cost
+        $tax = $this->tax($cost);
+
+        //total cost calculation
+        $tot_cost = $cost + $tax;
+
+        //processing charge calculation
+        $processing_charge = $this->processingCharge($tot_cost);
+
+        //total cost
+        $total = ceil($tot_cost + $processing_charge);
+        //delegate count and stall manning count
+        $del_count = $this->delegateCount($request->booth_size);
+
+
         //exhibitor_id generate here
         $exhibitor_id = 'EXH' . rand(1000, 9999);
         // Map form data to model fields
@@ -120,6 +149,17 @@ class FormController extends Controller
             'gst_number' => $request->gst_number,
             'pan_number' => $request->pan_number,
             'paymode' => $request->payment_mode,
+            'selection_amount' => $cost,
+            'payment_status' => 'Pending',
+            'tin_number' => $tin,
+            'total_amount' => $total,
+            'processing_charge' => $processing_charge,
+            'tax_amount' => $tax,
+            'delegate_count' => $del_count[0],
+            'stall_manning_count' => $del_count[1],
+            'currency' => $country[0],
+            'amt_ext' => $country[1],
+            'dollar' => $country[2],
         ];
 
         // Create a new exhibitor record
@@ -135,9 +175,17 @@ class FormController extends Controller
             'captcha' => $request->captcha,
         ];
         $login = user_login_table::create($loginData);
-        session(['exhibitor_id' => $exhibitor->exhibitor_id]);
+        //store exhibitor_id in session
+        Session::put('exhibitor_id', $exhibitor->exhibitor_id);
+        if (!session()->has('exhibitor_id')) {
+            // Store exhibitor_id in the session
+            session(['exhibitor_id' => $exhibitor->exhibitor_id]);
+        }
+        //verify whether it is put into session or not
+        Log::info('Exhibitor ID' . session('exhibitor_id'));
+
         // Return to previewExhibitor with $exhibitor_id
-        return redirect()->route('preview.exhibitor');
+        return redirect()->route('preview.exhibitor' );
 
 
         /*return response()->json([
@@ -149,15 +197,130 @@ class FormController extends Controller
     //preview exhibitor
     public function previewExhibitor()
     {
-        $id = session('exhibitor_id');
-        $exhibitor = exhibitor_reg_table::find($id);
-        return view('exhibitor.preview', compact('exhibitor'));
+        if (session()->has('exhibitor_id')) {
+            $exhibitor_id = request()->session()->get('exhibitor_id');
+
+            // Log the exhibitor_id
+            Log::info('Exhibitor ID from session: ' . $exhibitor_id);
+
+            // Use the exhibitor_id to find the exhibitor in the database
+            $exhibitor = exhibitor_reg_table::where('exhibitor_id', $exhibitor_id)->first();
+
+            // Log the result of the database query
+            Log::info('Exhibitor from database: ', (array) $exhibitor);
+
+            // Check if exhibitor exists
+            if (!$exhibitor) {
+                // Handle the case where the exhibitor is not found
+                return redirect()->back()->with('error', 'Exhibitor not found');
+            }
+
+            return view('exhibitor.preview', compact('exhibitor'));
+        } else {
+            // Handle the case when exhibitor_id is not set in the session
+            // You can redirect to an error page or display an error message
+            return redirect()->route('error.page')->with('error', 'Exhibitor ID not found in the session.');
+        }
     }
     public function submit2(Request $request)
     {
         Log::info($request->all());
         Exhibitor::create($request->all());
     }
+
+    //Cost Generation
+    public function cost($booth_size)
+    {
+        $cost = 0;
+        if ($booth_size == '6sqm') {
+            $cost = 39999;
+        } elseif ($booth_size == '9sqm') {
+            $cost = 59999;
+        } elseif ($booth_size == '9x9') {
+            $cost = 30000;
+        } elseif ($booth_size == '12x12') {
+            $cost = 40000;
+        }
+        return $cost;
+    }
+
+    //exhibitor delegate count
+    public function delegateCount($booth_size)
+    {
+        $del_count = 0;
+        $stall_manning =0;
+
+        if ($booth_size == '6sqm') {
+            $del_count = 2;
+            $stall_manning = 1;
+        } elseif ($booth_size == '9sqm') {
+            $del_count = 4;
+            $stall_manning = 2;
+        } elseif ($booth_size == '12sqm') {
+            $del_count = 6;
+            $stall_manning = 3;
+        }
+        return [$del_count, $stall_manning];
+    }
+
+    //Generate TIN Number
+    public function generateTIN()
+    {
+        $tin = 'TIN' . rand(1000, 9999);
+        return $tin;
+    }
+
+    //processing charge
+    public function processingCharge($total): float
+    {
+        $processing_charge_per = 3;
+        return (($total * $processing_charge_per) / 100);
+    }
+
+    //GST tax calculation
+    public function tax($cost): float
+    {
+        $SERVICE_TAX = 18;
+        $main_amt = $cost;
+        return round(($main_amt * $SERVICE_TAX) / 100);
+    }
+
+    //payment currency
+    public function currency($country)
+    {
+        $currency = '';
+        $amt_ext = '';
+        if ($country == 'INDIAN') {
+            $currency = 'INR';
+            $amt_ext = 'Rs.';
+            $rate = 1;
+
+        } elseif ($country == 'INTERNATIONAL'){
+            $currency = 'USD';
+            $amt_ext = '$';
+            $rate = $this->currencyRate($country);
+        }
+
+        return [$currency, $amt_ext, $rate];
+    }
+    //fetch current usd Indian rate
+    public function currencyRate($country)
+    {
+        $url = 'https://api.exchangerate-api.com/v4/latest/USD';
+        $response = file_get_contents($url);
+        $result = json_decode($response, true);
+        $rate = $result['rates']['INR'];
+        $amt = 0;
+        if ($country == 'INDIAN') {
+            $amt = 1;
+        } elseif ($country == 'INTERNATIONAL'){
+            $amt = $rate;
+        }
+        return $rate;
+
+    }
+
+
 
 
     public function generateCaptcha()

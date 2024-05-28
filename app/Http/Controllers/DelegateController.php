@@ -57,10 +57,10 @@ class DelegateController extends Controller
         return $sector;
     }
 
-    private function no_of_delegates()
+    private function no_of_delegates(): int
     {
-        $delegates = 5;
-        return $delegates;
+        //no of delegates allowed
+        return 5;
     }
 
 
