@@ -3,8 +3,8 @@
         <i class="uil uil-bars sidebar-toggle"></i>
 
         <div class="event-details">
-            <h4><i class="uil uil-calendar-alt"></i> Prawaas 4.0</h4>
-            <h4><i class="uil uil-calendar"></i> Aug 29-31, 2024</h4>
+            <h4><i class="uil uil-calendar-alt"></i> TiE Global</h4>
+            <h4><i class="uil uil-calendar"></i> Dec 8-14, 2024</h4>
         </div>
 
 
