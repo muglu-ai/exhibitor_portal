@@ -1,6 +1,7 @@
 @include('layouts.formheader')
 @include('layouts.form_navbar')
 
+
 <div class="isolate bg-white px-6 py-24 sm:py-32 lg:px-8" style="
     padding-top: 20px; padding-bottom: 1px;">
     <div class="absolute inset-x-0 top-[-10rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[-20rem]" aria-hidden="true">
@@ -33,61 +34,70 @@ Mobile,
 Designation,
 Payment Mode
 -->
+{{--        @dd($exhibitor)--}}
         <tr class="border-t border-gray-300">
             <td class="py-2 px-4 text-sm font-bold text-gray-800">Association Name:</td>
-            <td class="py-2 px-4 text-sm font-medium text-gray-800">Association Name</td>
+            <td class="py-2 px-4 text-sm font-medium text-gray-800">Startup Exhibitor</td>
         </tr>
         <tr class="border-t border-gray-300">
             <td class="py-2 px-4 text-sm font-bold text-gray-800">Booth Size:</td>
-            <td class="py-2 px-4 text-sm font-medium text-gray-800">10x10</td>
+            <td class="py-2 px-4 text-sm font-medium text-gray-800">{{ $exhibitor->exhibitor_id }}</td>
         </tr>
         <tr class="border-t border-gray-300">
             <td class="py-2 px-4 text-sm font-bold text-gray-800">Sector:</td>
-            <td class="py-2 px-4 text-sm font-medium text-gray-800">Sector Name</td>
+            <td class="py-2 px-4 text-sm font-medium text-gray-800">{{ $exhibitor->sector }}</td>
         </tr>
         <tr class="border-t border-gray-300">
             <td class="py-2 px-4 text-sm font-bold text-gray-800">Name of Exhibitor:</td>
-            <td class="py-2 px-4 text-sm font-medium text-gray-800">Organisation Name</td>
+            <td class="py-2 px-4 text-sm font-medium text-gray-800">{{ $exhibitor->org_name }}</td>
         </tr>
         <tr class="border-t border-gray-300">
             <td class="py-2 px-4 text-sm font-bold text-gray-800">Organisation Registration Certificate:</td>
-            <td class="py-2 px-4 text-sm font-medium text-gray-800">Registration Certificate</td>
+            <!-- Click here to view pdf -->
+            <td><a href="#" class="py-2 px-4 text-sm font-medium text-blue-500">Click here to view pdf</a>
+            </td>
+{{--            <td class="py-2 px-4 text-sm font-medium text-gray-800">Registration Certificate</td>--}}
         </tr>
         <tr class="border-t border-gray-300">
             <td class="py-2 px-4 text-sm font-bold text-gray-800">Invoice Address:</td>
-            <td class="py-2 px-4 text-sm font-medium text-gray-800">Invoice Address, City, State, Postal Code</td>
+            <!-- Invoice Address, City, State, Postal Code -->
+            <td class="py-2 px-4 text-sm font-medium text-gray-800">{{ $exhibitor->address1 ." ". $exhibitor->city ." ". $exhibitor->state ." ". $exhibitor->zip_code }} </td>
+{{--            <td class="py-2 px-4 text-sm font-medium text-gray-800">Invoice Address, City, State, Postal Code</td>--}}
         </tr>
+
         <tr class="border-t border-gray-300">
             <td class="py-2 px-4 text-sm font-bold text-gray-800">Contact Number:</td>
-            <td class="py-2 px-4 text-sm font-medium text-gray-800">+919801217815</td>
+            <td class="py-2 px-4 text-sm font-medium text-gray-800">{{ $exhibitor->cp_mobile }} </td>
         </tr>
+        @if($exhibitor->gst_details == 'yes')
         <tr class="border-t border-gray-300">
             <td class="py-2 px-4 text-sm font-bold text-gray-800">GST Number:</td>
-            <td class="py-2 px-4 text-sm font-medium text-gray-800">GST Number</td>
+            <td class="py-2 px-4 text-sm font-medium text-gray-800">{{$exhibitor->gst_number}}</td>
         </tr>
+        @endif
         <tr class="border-t border-gray-300">
             <td class="py-2 px-4 text-sm font-bold text-gray-800">PAN Number:</td>
-            <td class="py-2 px-4 text-sm font-medium text-gray-800">PAN Number</td>
+            <td class="py-2 px-4 text-sm font-medium text-gray-800">{{$exhibitor->pan_number}}</td>
         </tr>
         <tr class="border-t border-gray-300">
             <td class="py-2 px-4 text-sm font-bold text-gray-800">Name:</td>
-            <td class="py-2 px-4 text-sm font-medium text-gray-800">Name of Contact Person</td>
+            <td class="py-2 px-4 text-sm font-medium text-gray-800">{{$exhibitor->cp_name}}</td>
         </tr>
         <tr class="border-t border-gray-300">
             <td class="py-2 px-4 text-sm font-bold text-gray-800">Email:</td>
-            <td class="py-2 px-4 text-sm font-medium text-gray-800">Email </td>
+            <td class="py-2 px-4 text-sm font-medium text-gray-800">{{$exhibitor->cp_email}}</td>
         </tr>
         <tr class="border-t border-gray-300">
             <td class="py-2 px-4 text-sm font-bold text-gray-800">Mobile:</td>
-            <td class="py-2 px-4 text-sm font-medium text-gray-800">+919801217815</td>
+            <td class="py-2 px-4 text-sm font-medium text-gray-800">{{$exhibitor->cp_mobile}}</td>
         </tr>
         <tr class="border-t border-gray-300">
             <td class="py-2 px-4 text-sm font-bold text-gray-800">Designation:</td>
-            <td class="py-2 px-4 text-sm font-medium text-gray-800">Designation of Contact Person</td>
+            <td class="py-2 px-4 text-sm font-medium text-gray-800">{{$exhibitor->cp_designation}}</td>
         </tr>
         <tr class="border-t border-gray-300">
             <td class="py-2 px-4 text-sm font-bold text-gray-800">Payment Mode:</td>
-            <td class="py-2 px-4 text-sm font-medium text-gray-800">Payment Mode</td>
+            <td class="py-2 px-4 text-sm font-medium text-gray-800">{{$exhibitor->paymode}}</td>
         </tr>
         <!-- Company Website, Company Description, Company Address, Company Phone, Company Email -->
         </tbody>
@@ -100,19 +110,25 @@ Payment Mode
                     <tbody class="bg-gray-100 divide-y divide-gray-700">
                     <tr class="flex justify-between ">
                         <td class="text-black mb-2 sm:mb-0">Selection Amount</td>
-                        <td class="font-medium text-black">Rs. 39999</td>
+                        <!-- amt_Ext in td either rs or dollar-->
+                        <td class="font-medium text-black">{{$exhibitor->amt_ext }}</td>
+
+                        <td class="font-medium text-black">{{$exhibitor->selection_amount}}</td>
                     </tr>
                     <tr class="flex justify-between ">
                         <td class="text-black mb-2 sm:mb-0">GST @ 18%</td>
-                        <td class="font-medium text-black">Rs. 7200</td>
+                        <td class="font-medium text-black">{{$exhibitor->amt_ext}}</td>
+                        <td class="font-medium text-black">{{$exhibitor->tax_amount}}</td>
                     </tr>
                     <tr class="flex justify-between ">
                         <td class="text-black mb-2 sm:mb-0">Processing Charges</td>
-                        <td class="font-medium text-black">Rs. 1416</td>
+                        <td class="font-medium text-black">{{$exhibitor->amt_ext}}</td>
+                        <td class="font-medium text-black">{{$exhibitor->processing_charge}}</td>
                     </tr>
                     <tr class="flex justify-between font-medium text-lg text-black">
                         <td class="text-black mb-2 sm:mb-0">Total (Including Processing Charges)</td>
-                        <td class="text-black">Rs. 48515</td>
+                        <td class="font-medium text-black">{{$exhibitor->amt_ext}}</td>
+                        <td class="text-black">{{ $exhibitor->total_amount}}</td>
                     </tr>
                     </tbody>
                 </table>

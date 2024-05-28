@@ -72,6 +72,9 @@ class exhibitor_reg_details extends Model
         'service_req',
         'can_invite',
 ];
+
+
+
     public function exhibitor()
     {
         return $this->belongsTo(promocode_table::class, 'promocode_organization', 'exhibiting_under');

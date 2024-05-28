@@ -92,14 +92,14 @@ OPTION	BOOTH SIZE(SQM)	TOTAL COST IN INR
         <div class="sm:col-span-2 mt-5">
             <label for="exhibitor_name" class="block text-sm font-semibold leading-6 text-gray-900">Name of the Exhibitor (Organisation Name)</label>
             <div class="mt-2.5">
-              <input type="text" name="exhibitor_name" id="exhibitor_name" autocomplete="exhibitor_name" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Enter your Organisation name">
+              <input type="text" name="exhibitor_name" id="exhibitor_name" autocomplete="exhibitor_name" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Enter your Organisation name" value="{{ old('exhibitor_name') }}>
             </div>
         </div>
         <!-- Upload of Company Registration Certificate / Certificate of Incorporation -->
         <div class="sm:col-span-2 mt-5">
             <label for="company_reg" class="block text-sm font-semibold leading-6 text-gray-900">Upload Company Registration Certificate / Certificate of Incorporation</label>
             <div class="mt-2.5">
-                <input type="file" accept="application/pdf" name="company_reg" id="company_reg" autocomplete="company_reg" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                <input type="file" accept="application/pdf" name="company_reg" id="company_reg" autocomplete="company_reg" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="{{old('company_reg')}}" >
             </div>
             <!-- Note:
             1. File should be in PDF format
@@ -112,7 +112,7 @@ OPTION	BOOTH SIZE(SQM)	TOTAL COST IN INR
         <div class="sm:col-span-2 mt-5">
             <label for="invoice_add" class="block text-sm font-semibold leading-6 text-gray-900">Invoice Address</label>
             <div class="mt-2.5">
-                <input type="text" name="invoice_add" id="invoice_add" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">  </input>
+                <input type="text" name="invoice_add" value="{{old('invoice_add')}}" id="invoice_add" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">  </input>
             </div>
         </div>
         <!-- Organisation Address -->
@@ -120,13 +120,13 @@ OPTION	BOOTH SIZE(SQM)	TOTAL COST IN INR
             <div>
                 <label for="city" class="block text-sm font-semibold leading-6 text-gray-900">City</label>
                 <div class="mt-2.5">
-                    <input type="text" name="city" id="city" placeholder="City" autocomplete="city" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                    <input type="text" name="city" value="{{old('city')}}" id="city" placeholder="City" autocomplete="city" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                 </div>
             </div>
             <div>
                 <label for="state" class="block text-sm font-semibold leading-6 text-gray-900">State</label>
                 <div class="mt-2.5">
-                    <input type="text" name="state" id="state" placeholder="State" autocomplete="state" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                    <input type="text" name="state" id="state" value="{{old('state')}}" placeholder="State" autocomplete="state" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                 </div>
             </div>
             <div>
@@ -146,7 +146,7 @@ OPTION	BOOTH SIZE(SQM)	TOTAL COST IN INR
             <div>
                 <label for="zip" class="block text-sm font-semibold leading-6 text-gray-900">Zip Code</label>
                 <div class="mt-2.5">
-                    <input type="text" name="zip" id="zip" placeholder="Zip Code" autocomplete="zip" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                    <input type="text" name="zip" id="zip" value="{{old('zip')}}" placeholder="Zip Code" autocomplete="zip" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                 </div>
             </div>
         </div>
