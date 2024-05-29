@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('email',250);
             $table->foreign('email',250)->references('cp_email')->on('exhibitor_reg_details');
             $table->string('password');
+            $table->string('password_actual')->nullable();
             $table->foreign('exhibitor_id')->references('exhibitor_id')->on('exhibitor_reg_details');
             $table->string('captcha',50)->nullable();
             $table->string('status', 1)->default(('1'));

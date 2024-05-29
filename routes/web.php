@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CashfreePaymentController;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EventController;
@@ -33,12 +34,27 @@ require __DIR__.'/auth.php';
     Route::post('/newExhibitorStore', [FormController::class, 'submit'])->name('exhibitor.submit');
 //    Route::get('preview', [FormController::class, 'previewExhibitor'])->name('exhibitor.preview');
     Route::get('/previewExhibitor', [FormController::class,'previewExhibitor'])->name('preview.exhibitor');
+    //payment page
+    Route::get('/payment', [FormController::class, 'paymentPage'])->name('paymentPage');
 // });
+
+//payment gateway
+//Route::get('/payment', [CashfreePaymentController::class, 'index'])->name('payment');
+//rout to payment gateway paymentPage
+Route::post('/newpayment', [FormController::class, 'paymentPage'])->name('paymentPage');
+
+Route::post('/paynow', [CashfreePaymentController::class, 'paynow'])->name('paynow');
+
+Route::post('/payment', [CashfreePaymentController::class, 'createOrder'])->name('createOrder');
 
 
 Route::get('/newdelegate', [DelegateController::class, 'show'])->name('delegate.create');
 
+//payment redirect 1
+Route::get('/pay', [CashfreePaymentController::class, 'paymentRedirect'])->name('paymentRedirect');
 
+//paymnent success
+Route::get('/payment/success', [FormController::class, 'paymentSuccess'])->name('paymentSuccess');
 // Route::get('/portal', [App\Http\Controllers\ExhibitorController::class, 'view'])->name('portal');
 
 //exhibitorController -->harsh

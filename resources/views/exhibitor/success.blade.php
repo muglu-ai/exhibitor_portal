@@ -13,8 +13,8 @@
     <div class="container mx-auto max-w-screen-lg">
         <div class="mt-8 p-8 bg-white border border-gray-300 rounded-lg">
             <div class="text-left mb-8">
-                <h2 class="text-2xl font-bold text-gray-800"></h2>
-                <p class="mt-2 text-sm text-gray-600">Please review your exhibitor profile before submitting.</p>
+                <h2 class="text-2xl font-bold text-gray-800">Exhibitor Detail</h2>
+{{--                <p class="mt-2 text-sm text-gray-600">Please review your exhibitor profile before submitting.</p>--}}
             </div>
             <table class="min-w-full bg-white">
                 <tbody>
@@ -113,10 +113,15 @@
                                 <td class="font-medium text-black">{{$exhibitor->amt_ext}}</td>
                                 <td class="font-medium text-black">{{$exhibitor->processing_charge}}</td>
                             </tr>
-                            <tr class="flex justify-between font-medium text-lg text-black">
+                            <tr class="flex justify-between ">
                                 <td class="text-black mb-2 sm:mb-0">Total (Including Processing Charges)</td>
                                 <td class="font-medium text-black">{{$exhibitor->amt_ext}}</td>
-                                <td class="text-black">{{ $exhibitor->total_amount}}</td>
+                                <td class="font-medium text-black">{{ $exhibitor->total_amount}}</td>
+                            </tr>
+                            <tr class="flex justify-between font-medium text-lg text-black">
+                                <td class="text-black mb-2 sm:mb-0">Total Amount Received</td>
+                                <td class="font-medium text-black">{{$exhibitor->amt_ext}}</td>
+                                <td class="text-black">{{ $exhibitor->total_amt_received}}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -132,10 +137,10 @@
 </div>
 <!-- Preview of form fields -->
 
-<div class="mt-8 flex items-center justify-center space-x-4 mb-10">
-    <a href="{{ url()->previous() }}" class="px-6 py-3 text-sm font-medium text-white bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] rounded-md hover:from-[#ff80b5] hover:to-[#9089fc]">Edit</a>
-    <form action="{{ route('paymentPage') }}" method="POST">
-        @csrf
-        <button type="submit" class="px-6 py-3 text-sm font-medium text-white bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] rounded-md hover:from-[#ff80b5] hover:to-[#9089fc]">Next</button>
-    </form>
-</div>
+{{--<div class="mt-8 flex items-center justify-center space-x-4 mb-10">--}}
+{{--    <a href="{{ url()->previous() }}" class="px-6 py-3 text-sm font-medium text-white bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] rounded-md hover:from-[#ff80b5] hover:to-[#9089fc]">Edit</a>--}}
+{{--    <form action="{{ route('paymentPage') }}" method="POST">--}}
+{{--        @csrf--}}
+{{--        <button type="submit" class="px-6 py-3 text-sm font-medium text-white bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] rounded-md hover:from-[#ff80b5] hover:to-[#9089fc]">Next</button>--}}
+{{--    </form>--}}
+{{--</div>--}}

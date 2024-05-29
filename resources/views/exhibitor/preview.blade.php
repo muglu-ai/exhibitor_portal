@@ -18,23 +18,6 @@
     </div>
     <table class="min-w-full bg-white">
         <tbody>
-        <!-- Assocication Name,
-Booth Size,Sector, Name of Exhibitor (Organisation Name)
-Organisation Registration Certificate
-Invoice Address, City
-State,
-Postal Code	,
-Telephone Number	,
-Website,
-GST Number	,
-PAN Number	,
-Name,
-Email,
-Mobile,
-Designation,
-Payment Mode
--->
-{{--        @dd($exhibitor)--}}
         <tr class="border-t border-gray-300">
             <td class="py-2 px-4 text-sm font-bold text-gray-800">Association Name:</td>
             <td class="py-2 px-4 text-sm font-medium text-gray-800">Startup Exhibitor</td>
@@ -81,7 +64,7 @@ Payment Mode
         </tr>
         <tr class="border-t border-gray-300">
             <td class="py-2 px-4 text-sm font-bold text-gray-800">Name:</td>
-            <td class="py-2 px-4 text-sm font-medium text-gray-800">{{$exhibitor->cp_name}}</td>
+            <td class="py-2 px-4 text-sm font-medium text-gray-800">{{$exhibitor->cp_title}}.  {{$exhibitor->cp_fname}} {{$exhibitor->cp_lname}}</td>
         </tr>
         <tr class="border-t border-gray-300">
             <td class="py-2 px-4 text-sm font-bold text-gray-800">Email:</td>
@@ -98,6 +81,11 @@ Payment Mode
         <tr class="border-t border-gray-300">
             <td class="py-2 px-4 text-sm font-bold text-gray-800">Payment Mode:</td>
             <td class="py-2 px-4 text-sm font-medium text-gray-800">{{$exhibitor->paymode}}</td>
+        </tr>
+        <!-- Pay Status -->
+        <tr class="border-t border-gray-300">
+            <td class="py-2 px-4 text-sm font-bold text-gray-800">Pay Status:</td>
+            <td class="py-2 px-4 text-sm font-medium text-gray-800">{{$exhibitor->pay_status}}</td>
         </tr>
         <!-- Company Website, Company Description, Company Address, Company Phone, Company Email -->
         </tbody>
@@ -144,10 +132,10 @@ Payment Mode
 </div>
     <!-- Preview of form fields -->
 
-        <div class="mt-8 flex items-center justify-center space-x-4">
-            <a href="{{ route('exhibitor.create') }}" class="px-6 py-3 text-sm font-medium text-white bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] rounded-md hover:from-[#ff80b5] hover:to-[#9089fc]">Edit</a>
-{{--            <form action="{{ route('') }}" method="POST">--}}
-{{--                @csrf--}}
-{{--                <button type="submit" class="px-6 py-3 text-sm font-medium text-white bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] rounded-md hover:from-[#ff80b5] hover:to-[#9089fc]">Submit</button>--}}
-{{--            </form>--}}
+        <div class="mt-8 flex items-center justify-center space-x-4 mb-10">
+            <a href="{{ url()->previous() }}" class="px-6 py-3 text-sm font-medium text-white bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] rounded-md hover:from-[#ff80b5] hover:to-[#9089fc]">Edit</a>
+            <form action="{{ route('paymentPage') }}" method="POST">
+                @csrf
+                <button type="submit" class="px-6 py-3 text-sm font-medium text-white bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] rounded-md hover:from-[#ff80b5] hover:to-[#9089fc]">Next</button>
+            </form>
         </div>

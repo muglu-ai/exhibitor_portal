@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Exhibitor;
+use App\Models\exhibitor_reg_details;
 use App\Models\exhibitor_reg_table;
+use App\Models\user_login_details;
 use App\Models\user_login_table;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -15,6 +17,7 @@ use App\Http\Requests\ExhibitorRequest;
 use Illuminate\Support\Facades\Log;
 use App\Models\Exhibitors;
 use Illuminate\Support\Facades\Session;
+use App\Http\Controllers\CashfreePaymentController;
 
 
 
@@ -131,6 +134,7 @@ class FormController extends Controller
         // Map form data to model fields
         $exhibitorData = [
             'exhibitor_id' => $exhibitor_id,
+            'user_type' => 'Startup Exhibitor',
             'booth_size' => $request->booth_size,
             'sector' => $request->sector,
             'org_name' => $request->exhibitor_name,
@@ -140,7 +144,10 @@ class FormController extends Controller
             'state' => $request->state,
             'country' => $request->country,
             'zip_code' => $request->zip,
-            'cp_name' => $request->cp_title . ' ' . $request->first_name . ' ' . $request->last_name,
+            'cp_title' => $request->cp_title,
+            'cp_fname' => $request->first_name,
+            'cp_lname' => $request->last_name,
+//            'cp_name' => $request->cp_title . ' ' . $request->first_name . ' ' . $request->last_name,
             'cp_email' => $request->cp_email,
             'cp_designation' => $request->cp_design,
             'cp_mobile' => $request->cp_con_number,
@@ -150,33 +157,26 @@ class FormController extends Controller
             'pan_number' => $request->pan_number,
             'paymode' => $request->payment_mode,
             'selection_amount' => $cost,
-            'payment_status' => 'Pending',
-            'tin_number' => $tin,
+            'pay_status' => 'Not Paid',
+            'tin_no' => $tin,
             'total_amount' => $total,
             'processing_charge' => $processing_charge,
             'tax_amount' => $tax,
-            'delegate_count' => $del_count[0],
-            'stall_manning_count' => $del_count[1],
+            'reg_date' => now(),
+            'delegate_alloted' => $del_count[0],
+            'sm_count' => $del_count[1],
             'currency' => $country[0],
             'amt_ext' => $country[1],
             'dollar' => $country[2],
         ];
 
         // Create a new exhibitor record
-        $exhibitor = exhibitor_reg_table::create($exhibitorData);
+        $exhibitor = exhibitor_reg_details::create($exhibitorData);
         //generate random password of 8 characters
-        $password = substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789') , 0 , 8 );
-        //create login details for exhibitor in user_login_table
-        $loginData = [
-            'exhibitor_id' => $exhibitor_id,
-            'email' => $request->cp_email,
-            'password' => bcrypt($password),
-            'password_actual'=> $password,
-            'captcha' => $request->captcha,
-        ];
-        $login = user_login_table::create($loginData);
+
         //store exhibitor_id in session
         Session::put('exhibitor_id', $exhibitor->exhibitor_id);
+        Session::put('tin_no', $exhibitor->tin_no);
         if (!session()->has('exhibitor_id')) {
             // Store exhibitor_id in the session
             session(['exhibitor_id' => $exhibitor->exhibitor_id]);
@@ -201,13 +201,13 @@ class FormController extends Controller
             $exhibitor_id = request()->session()->get('exhibitor_id');
 
             // Log the exhibitor_id
-            Log::info('Exhibitor ID from session: ' . $exhibitor_id);
+            //Log::info('Exhibitor ID from session: ' . $exhibitor_id);
 
             // Use the exhibitor_id to find the exhibitor in the database
-            $exhibitor = exhibitor_reg_table::where('exhibitor_id', $exhibitor_id)->first();
+            $exhibitor = exhibitor_reg_details::where('exhibitor_id', $exhibitor_id)->first();
 
             // Log the result of the database query
-            Log::info('Exhibitor from database: ', (array) $exhibitor);
+            //Log::info('Exhibitor from database: ', (array) $exhibitor);
 
             // Check if exhibitor exists
             if (!$exhibitor) {
@@ -216,6 +216,102 @@ class FormController extends Controller
             }
 
             return view('exhibitor.preview', compact('exhibitor'));
+        } else {
+            // Handle the case when exhibitor_id is not set in the session
+            // You can redirect to an error page or display an error message
+            return redirect()->route('exhibitor.create')->with('error', 'Exhibitor ID not found in the session.');
+        }
+    }
+    //go to payment page
+    public function paymentPage()
+    {
+        if (session()->has('exhibitor_id')) {
+            $exhibitor_id = request()->session()->get('exhibitor_id');
+            // Log the exhibitor_id
+            //Log::info('Exhibitor ID from session: ' . $exhibitor_id);
+
+            // Use the exhibitor_id to find the exhibitor in the database
+            $exhibitor = exhibitor_reg_details::where('exhibitor_id', $exhibitor_id)->first();
+
+            $order_data = [
+                'amount' => $exhibitor->total_amount,
+                'currency' => $exhibitor->currency,
+                'tin_no' => $exhibitor->tin_no,
+                'customer_phone' => $exhibitor->cp_mobile,
+                'customer_name' => $exhibitor->cp_fname . ' ' . $exhibitor->cp_lname,
+                'customer_email' => $exhibitor->cp_email,
+                'customer_address' => $exhibitor->address1,
+                'customer_city' => $exhibitor->city,
+                'customer_state' => $exhibitor->state,
+                'customer_zip' => $exhibitor->zip_code,
+                'customer_country' => $exhibitor->country,
+            ];
+
+            //store tin number in session
+            Session::put('tin_no', $exhibitor->tin_no);
+            if (!session()->has('tin_no')) {
+                // Store exhibitor_id in the session
+                session(['tin_no' => $exhibitor->tin_no]);
+            }
+            $cashfree = new CashfreePaymentController();
+            $pay_id = $cashfree->paynow($order_data);
+            Log::info('Payment ID: ' . $pay_id);
+
+            // Check if exhibitor exists
+            if (!$exhibitor) {
+                // Handle the case where the exhibitor is not found
+                return redirect()->back()->with('error', 'Exhibitor not found');
+            }
+
+            //return view of paynow page
+            return view('payment.paynow', compact('pay_id', 'exhibitor'));
+            return response()->json([
+                'exhibitor' => $exhibitor
+            ], 200);
+
+            return view('exhibitor.payment', compact('exhibitor'));
+        } else {
+            // Handle the case when exhibitor_id is not set in the session
+            // You can redirect to an error page or display an error message
+            //return json
+            return response()->json([
+                'error' => 'Exhibitor ID not found in the session.'
+            ], 404);
+            return redirect()->route('error.page')->with('error', 'Exhibitor ID not found in the session.');
+        }
+    }
+
+    //payment success route
+    public function paymentSuccess()
+    {
+        if (session()->has('exhibitor_id')) {
+            $exhibitor_id = request()->session()->get('exhibitor_id');
+            // Log the exhibitor_id
+            //Log::info('Exhibitor ID from session: ' . $exhibitor_id);
+
+            // Use the exhibitor_id to find the exhibitor in the database
+            $exhibitor = exhibitor_reg_details::where('exhibitor_id', $exhibitor_id)->first();
+
+            //success payment create credentials for exhibitor portal
+
+            $password = substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789') , 0 , 8 );
+            //create login details for exhibitor in user_login_table
+            $loginData = [
+                'exhibitor_id' => $exhibitor_id,
+                'email' => $exhibitor->cp_email,
+                'password' => bcrypt($password),
+                'password_actual'=> $password,
+            ];
+            user_login_details::create($loginData);
+
+            // Check if exhibitor exists
+            if (!$exhibitor) {
+                // Handle the case where the exhibitor is not found
+                return redirect()->back()->with('error', 'Exhibitor not found');
+            }
+            //destroy session
+            Session::forget('exhibitor_id');
+            return view('exhibitor.success', compact('exhibitor'));
         } else {
             // Handle the case when exhibitor_id is not set in the session
             // You can redirect to an error page or display an error message
