@@ -17,9 +17,9 @@ class DelegatePersonalInfoSeeder extends Seeder
     {
         DB::table('delegate_personal_info')->insert([
             [
-                // 'exhibitor_id' => 'gVF3dpYtOB',
-                'delegate_id' => 'ZdTmmKi4UHsvmI9TraemZOYiKIT3Un',
-                'tin_no' => '1234567890',
+                'exhibitor_id' => 'gVF3dpYtOB',
+                // 'delegate_id' => 'ZdTmmKi4UHsvmI9TraemZOYiKIT3Un',
+                'tin_no' => 'test',
                 'del_title' => 'Mr.',
                 'del_fname' => 'John',
                 'del_lname' => 'Doe',

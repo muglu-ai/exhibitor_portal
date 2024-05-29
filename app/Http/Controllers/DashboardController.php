@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\exhibitor_reg_details;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -16,4 +17,5 @@ class DashboardController extends Controller
 
         return view('dashboard', ['user' => $user]);
     }
+
 }

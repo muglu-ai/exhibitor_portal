@@ -20,7 +20,7 @@
     <nav>
         <div class="logo-name">
             <div class="logo-image">
-                <img src="{{asset('logos/banner.png')}}" alt="">
+                <img src="{{asset('logo1.png')}}" alt="logo">
             </div>
 
             <span class="logo_name">Exhibitor Portal</span>
