@@ -1,199 +1,186 @@
 @include('portal.components.header')
 @include('portal.components.sidebar')
+<script src="https://cdn.tailwindcss.com"></script>
 
 @php
 $exh_id = session('exhibitor_id');
 @endphp
 
-<div class="dash-content">
-    <div class="overview">
-        <h1>Exhibitor Details</h1>
+<main class="container mx-auto my-12 px-4 md:px-6">
+    <div class="space-y-6">
+        <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
+            <div class="flex flex-col space-y-1.5 p-6 bg-gray-600 ">
+                <h3 class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight">Delegate Information</h3>
+            </div>
+            <div class="p-6">
+                <div class="relative w-full overflow-auto">
+                    @if($delegate->isNotEmpty())
+                    <table class="w-full caption-bottom text-sm">
+                        <thead class="[&amp;_tr]:border-b">
+                            <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                                <th class="h-12 px-4 text-left align-middle font-semibold text-lg text-muted-foreground bg-gray-400  [&amp;:has([role=checkbox])]:pr-0">
+                                    Name
+                                </th>
+                                <th class="h-12 px-4 text-left align-middle font-semibold text-lg text-muted-foreground bg-gray-400  [&amp;:has([role=checkbox])]:pr-0">
+                                    Email
+                                </th>
+                                <th class="h-12 px-4 text-left align-middle font-semibold text-lg text-muted-foreground bg-gray-400  [&amp;:has([role=checkbox])]:pr-0">
+                                    Designation
+                                </th>
+                                <th class="h-12 px-4 text-left align-middle font-semibold text-lg text-muted-foreground bg-gray-400  [&amp;:has([role=checkbox])]:pr-0">
+                                    Phone
+                                </th>
+                                <th class="h-12 px-4 text-left align-middle font-semibold text-lg text-muted-foreground bg-gray-400  [&amp;:has([role=checkbox])]:pr-0">
+                                    Category
+                                </th>
+                                <th class="h-12 px-4 text-left align-middle font-semibold text-lg text-muted-foreground bg-gray-400  [&amp;:has([role=checkbox])]:pr-0">
+                                    ID Type
+                                </th>
+                                <th class="h-12 px-4 text-left align-middle font-semibold text-lg text-muted-foreground bg-gray-400  [&amp;:has([role=checkbox])]:pr-0">
+                                    ID Number
+                                </th>
+                            </tr>
+                        </thead>
 
-        @if ($exhibitordel)
-        <div class="exhibitor-details">
-            <p><strong>Exhibitor ID:</strong> {{ $exhibitordel->exhibitor_id }}</p>
-            <p><strong>Org Type:</strong> {{ $exhibitordel->org_type }}</p>
-            <p><strong>Org Name:</strong> {{ $exhibitordel->org_name }}</p>
-            <p><strong>Sector:</strong> {{ $exhibitordel->sector }}</p>
-            <p><strong>Name:</strong> {{ $exhibitordel->cp_name }}</p>
-            <p><strong>Email:</strong> {{ $exhibitordel->cp_email }}</p>
-            <p><strong>Phone:</strong> {{ $exhibitordel->cp_mobile }}</p>
+                        <tbody class="[&amp;_tr:last-child]:border-0">
+                            @foreach($delegate as $del)
+                            <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                                    <div class="flex items-center gap-2">
+                                        <div>{{ $del->del_title }} {{ $del->del_fname }} {{ $del->del_lname }}</div>
+                                    </div>
+                                </td>
+                                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">{{ $del->del_email }}</td>
+                                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">{{ $del->del_designation }}</td>
+                                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">{{ $del->del_contact }}</td>
+                                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">{{ $del->del_type }}</td>
+                                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">{{ $del->del_govtid_type }}</td>
+                                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">{{ $del->del_govtid_no }}</td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    @else
+                    <p class="px-4 py-3">No stall manning details found.</p>
+                    @endif
+                </div>
+                <div id="form-container" class="hidden">
+                    <div class="relative w-full overflow-auto">
+                        <div class="p-6 bg-white shadow-md rounded-lg">
+                            <div class="flex justify-end mb-4">
+                                <button type="button" onclick="toggleForm()" class="text-gray-500 hover:text-gray-700 focus:outline-none focus:text-gray-700">
+                                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                            <h2 class="text-xl font-semibold mb-4">Add Delegate</h2>
+                            <form action="{{route('post_ExhibitorDelegate')}}" method="POST" class="grid grid-cols-2 gap-x-4">
+                                <input type="hidden" name="exhibitor_id" value="{{ $exh_id }}">
+                                @csrf
+                                <div class="mb-4">
+                                    <label for="delegate-title" class="block text-sm font-medium">Title</label>
+                                    <select id="delegate-title" name="del_title" class="w-full border border-gray-300 rounded-md p-2">
+                                        <option value="Mr.">Mr.</option>
+                                        <option value="Mrs.">Mrs.</option>
+                                        <option value="Ms.">Ms.</option>
+                                        <option value="Dr.">Dr.</option>
+                                        <option value="Prof.">Prof.</option>
+                                    </select>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="delegate-fname" class="block text-sm font-medium">First Name</label>
+                                    <input type="text" id="delegate-fname" name="del_fname" class="w-full border border-gray-300 rounded-md p-2">
+                                </div>
+                                <div class="mb-4">
+                                    <label for="delegate-lname" class="block text-sm font-medium">Last Name</label>
+                                    <input type="text" id="delegate-lname" name="del_lname" class="w-full border border-gray-300 rounded-md p-2">
+                                </div>
+                                <div class="mb-4">
+                                    <label for="delegate-email" class="block text-sm font-medium">Email</label>
+                                    <input type="email" id="delegate-email" name="del_email" class="w-full border border-gray-300 rounded-md p-2">
+                                </div>
+                                <div class="mb-4">
+                                    <label for="delegate-designation" class="block text-sm font-medium">Designation</label>
+                                    <input type="text" id="delegate-designation" name="del_designation" class="w-full border border-gray-300 rounded-md p-2">
+                                </div>
+                                <div class="mb-4">
+                                    <label for="delegate-phone" class="block text-smfont-medium">Phone</label>
+                                    <input type="tel" id="delegate-phone" name="del_contact" class="w-full border border-gray-300 rounded-md p-2">
+                                </div>
+                                <div class="mb-4">
+                                    <label for="delegate-id-type" class="block text-sm font-medium">ID Type</label>
+                                    <select id="delegate-id-type" name="del_govtid_type" class="w-full border border-gray-300 rounded-md p-2">
+                                        <option value="Aadhar Card">Aadhar Card</option>
+                                        <option value="PAN Card">PAN Card</option>
+                                        <option value="Passport">Passport</option>
+                                        <option value="Driving License">Driving License</option>
+                                    </select>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="delegate-id-number" class="block text-sm font-medium">ID Number</label>
+                                    <input type="text" id="delegate-id-number" name="del_govtid_no" class="w-full border border-gray-300 rounded-md p-2">
+                                </div>
+                                <div class="flex justify-end col-span-2">
+                                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md">Submit</button>
+                                    <button type="button" onclick="toggleForm()" class="bg-gray-200 text-gray-800 px-4 py-2 rounded-md ml-2">Cancel</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-4 flex justify-end">
+                    @if($delegate_count < $exhibitor_del_count) <button id="toggle-form" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-secondary text-secondary-foreground hover:bg-secondary/80 h-10 px-4 py-2" type="button">
+                        Add Delegate
+                        </button>
+                        @endif
+                </div>
+            </div>
         </div>
-        @endif
-
-        @if ($exhibitoradd1)
-        <div class="additional-contact-person">
-            <p><strong>Org Type:</strong> {{ $exhibitoradd1->org_type }}</p>
-            <p><strong>Org Name:</strong> {{ $exhibitoradd1->org_name }}</p>
-            <p><strong>Sector:</strong> {{ $exhibitoradd1->sector }}</p>
-            <p><strong>Name:</strong> {{ $exhibitoradd1->cp_title }} {{ $exhibitoradd1->cp_fname }} {{ $exhibitoradd1->cp_lname }}</p>
-            <p><strong>Email:</strong> {{ $exhibitoradd1->cp_email }}</p>
-            <p><strong>Phone:</strong> {{ $exhibitoradd1->cp_mobile }}</p>
-        </div>
-        @endif
-
     </div>
-
-    <table class="table table-bordered mt-3">
-        <thead class="thead-dark">
-            <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Designation</th>
-                <th>Govt ID Type</th>
-                <th>Govt ID Number</th>
-                <th>Category</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr class="delegate">
-                <td>{{ $exhibitoradd2->del_title }} {{ $exhibitoradd2->del_fname }} {{ $exhibitoradd2->del_lname }}</td>
-                <td>{{ $exhibitoradd2->del_email }}</td>
-                <td>{{ $exhibitoradd2->del_contact }}</td>
-                <td>{{ $exhibitoradd2->del_designation }}</td>
-                <td>{{ $exhibitoradd2->del_govtid_type }}</td>
-                <td>{{ $exhibitoradd2->del_govtid_no }}</td>
-                <td>{{ $exhibitoradd2->del_org_category }}</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-
-
-<div id="delegateFormContainer" style="display: none; margin-top: 20px;">
-    <form action="{{ route('post_ExhibitorDelegate') }}" method="POST" id="delegateForm">
-        @csrf
-        <input type="hidden" name="exhibitor_id" value="{{ $exhibitordel ? $exhibitordel->exhibitor_id : $exh_id }}">
-        <div class="delegateEntry">
-            <h5>Delegate Person</h5>
-            <div class="form-group">
-                <label for="del_name">Delegate Name</label>
-                <input type="text" class="form-control" id="del_name" name="del_name" required>
-            </div>
-            <div class="form-group">
-                <label for="del_email">Delegate Email</label>
-                <input type="email" class="form-control" id="del_email" name="del_email" required>
-            </div>
-            <div class="form-group">
-                <label for="del_contact">Delegate Phone</label>
-                <input type="text" class="form-control" id="del_contact" name="del_contact" required>
-            </div>
-            <div class="form-group">
-                <label for="del_designation">Delegate Designation</label>
-                <input type="text" class="form-control" id="del_designation" name="del_designation" required>
-            </div>
-            <div class="form-group">
-                <label for="del_govtid_type">Govt ID Type</label>
-                <input type="text" class="form-control" id="del_govtid_type" name="del_govtid_type" required>
-            </div>
-            <div class="form-group">
-                <label for="del_govtid_no">Govt ID Number</label>
-                <input type="text" class="form-control" id="del_govtid_no" name="del_govtid_no" required>
-            </div>
-        </div>
-        <button type="submit" class="btn btn-primary" id="saveDelegateButton">Save changes</button>
-    </form>
-</div>
+</main>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const addButton = document.getElementById('addDelegateButton');
-        const formContainer = document.getElementById('delegateFormContainer');
-
-        addButton.addEventListener('click', function() {
-            formContainer.style.display = formContainer.style.display === 'none' ? 'block' : 'none';
-        });
+    function toggleForm() {
+        const formContainer = document.getElementById('form-container');
+        formContainer.classList.toggle('hidden');
+    }
+    document.getElementById('toggle-form').addEventListener('click', function() {
+        toggleForm();
     });
 </script>
 
-    <style>
-        .table {
-            width: 100%;
-            margin-bottom: 1rem;
-            color: #212529;
-            background-color: #fff;
-            border-collapse: collapse;
+<script>
+    const body = document.querySelector("body"),
+        modeToggle = body.querySelector(".mode-toggle");
+    sidebar = body.querySelector("nav");
+    sidebarToggle = body.querySelector(".sidebar-toggle");
+
+    let getMode = localStorage.getItem("mode");
+    if (getMode && getMode === "dark") {
+        body.classList.toggle("dark");
+    }
+
+    let getStatus = localStorage.getItem("status");
+    if (getStatus && getStatus === "close") {
+        sidebar.classList.toggle("close");
+    }
+
+    modeToggle.addEventListener("click", () => {
+        body.classList.toggle("dark");
+        if (body.classList.contains("dark")) {
+            localStorage.setItem("mode", "dark");
+        } else {
+            localStorage.setItem("mode", "light");
         }
+    });
 
-        .table-bordered {
-            border: 1px solid #dee2e6;
+    sidebarToggle.addEventListener("click", () => {
+        sidebar.classList.toggle("close");
+        if (sidebar.classList.contains("close")) {
+            localStorage.setItem("status", "close");
+        } else {
+            localStorage.setItem("status", "open");
         }
-
-        .table-bordered th,
-        .table-bordered td {
-            border: 1px solid #dee2e6;
-        }
-
-        .thead-dark th {
-            color: #fff;
-            background-color: #343a40;
-            border-color: #454d55;
-        }
-
-        .text-center {
-            text-align: center;
-        }
-
-        .mt-3 {
-            margin-top: 1rem;
-        }
-
-        .contact-person {
-            background-color: #f8f9fa;
-            font-weight: bold;
-        }
-
-        .delegate {
-            background-color: #e9ecef;
-        }
-
-        .table th,
-        .table td {
-            padding: 0.75rem;
-            vertical-align: top;
-        }
-
-        .table thead th {
-            vertical-align: bottom;
-            border-bottom: 2px solid #dee2e6;
-        }
-
-        .table tbody+tbody {
-            border-top: 2px solid #dee2e6;
-        }
-    </style>
-    <script>
-        const body = document.querySelector("body"),
-            modeToggle = body.querySelector(".mode-toggle");
-        sidebar = body.querySelector("nav");
-        sidebarToggle = body.querySelector(".sidebar-toggle");
-
-        let getMode = localStorage.getItem("mode");
-        if (getMode && getMode === "dark") {
-            body.classList.toggle("dark");
-        }
-
-        let getStatus = localStorage.getItem("status");
-        if (getStatus && getStatus === "close") {
-            sidebar.classList.toggle("close");
-        }
-
-        modeToggle.addEventListener("click", () => {
-            body.classList.toggle("dark");
-            if (body.classList.contains("dark")) {
-                localStorage.setItem("mode", "dark");
-            } else {
-                localStorage.setItem("mode", "light");
-            }
-        });
-
-        sidebarToggle.addEventListener("click", () => {
-            sidebar.classList.toggle("close");
-            if (sidebar.classList.contains("close")) {
-                localStorage.setItem("status", "close");
-            } else {
-                localStorage.setItem("status", "open");
-            }
-        })
-    </script>
+    });
+</script>

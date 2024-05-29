@@ -36,9 +36,12 @@ class StallManningController extends Controller
             'sm_govt_id_number' => 'required|string|max:250',
         ]);
 
-        // Create a new instance of exhibitor stall manning
+        $exhibitor_id = $request->input('exhibitor_id');
+        $org_name = exhibitor_reg_details::where('exhibitor_id', $exhibitor_id)->value('org_name');
+
         $exhibitor = new exhibitor_stall_manning();
-        $exhibitor->exhibitor_id = $request->input('exhibitor_id');
+        $exhibitor->exhibitor_id = $exhibitor_id;
+        $exhibitor->org_name = $org_name;
         $exhibitor->sm_title = $request->input('sm_title');
         $exhibitor->sm_fname = $request->input('sm_fname');
         $exhibitor->sm_lname = $request->input('sm_lname');

@@ -9,11 +9,10 @@ $exh_id = session('exhibitor_id');
 <div class="container mx-auto py-12 px-4 md:px-6">
     <div class="space-y-8">
         <div class="flex justify-between items-center">
-            @if($stall_manning_count < $sm_count)
-                <button id="showFormButton" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-70 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2">
-                    Add New Person
+            @if($stall_manning_count < $sm_count) <button id="showFormButton" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-70 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2">
+                Add New Person
                 </button>
-            @endif
+                @endif
         </div>
         <div class="border rounded-lg shadow-sm overflow-hidden">
             @if($exhibitor_sm->isNotEmpty())
@@ -46,8 +45,7 @@ $exh_id = session('exhibitor_id');
             @endif
         </div>
 
-        @if($stall_manning_count < $sm_count)
-        <form id="stallManningForm" action="{{ route('post_StallManning') }}" method="POST" class="border rounded-lg shadow-sm hidden">
+        @if($stall_manning_count < $sm_count) <form id="stallManningForm" action="{{ route('post_StallManning') }}" method="POST" class="border rounded-lg shadow-sm hidden">
             <input type="hidden" name="exhibitor_id" value="{{ $exh_id }}">
             @csrf
             <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
@@ -62,7 +60,13 @@ $exh_id = session('exhibitor_id');
                 <div class="grid grid-cols-2 gap-4">
                     <div class="space-y-2">
                         <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="sm_title">Title</label>
-                        <input class="h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-70" id="sm_title" name="sm_title" placeholder="Enter title" />
+                        <select id="sm_title" name="sm_title" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-70">
+                            <option value="">Select Title</option>
+                            <option value="Mr.">Mr.</option>
+                            <option value="Ms.">Ms.</option>
+                            <option value="Mrs.">Mrs.</option>
+                            <option value="Dr.">Dr.</option>
+                        </select>
                     </div>
                     <div class="space-y-2">
                         <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="sm_fname">First Name</label>
@@ -92,10 +96,10 @@ $exh_id = session('exhibitor_id');
                         <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="sm_govt_id_type">Government ID Type</label>
                         <select id="sm_govt_id_type" name="sm_govt_id_type" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-70">
                             <option value="">Select ID type</option>
-                            <option value="option1">Option 1</option>
-                            <option value="option2">Option 2</option>
-                            <option value="option3">Option 3</option>
-                            <option value="option4">Option 4</option>
+                            <option value="Aadhar Card">Aadhar Card</option>
+                            <option value="PAN Card">PAN Card</option>
+                            <option value="Passport">Passport</option>
+                            <option value="Driving License">Driving License</option>
                         </select>
                     </div>
                     <div class="space-y-2">
@@ -109,8 +113,8 @@ $exh_id = session('exhibitor_id');
                     Save
                 </button>
             </div>
-        </form>
-        @endif
+            </form>
+            @endif
     </div>
 </div>
 
@@ -132,4 +136,37 @@ $exh_id = session('exhibitor_id');
         });
     });
 </script>
+<script>
+    const body = document.querySelector("body"),
+        modeToggle = body.querySelector(".mode-toggle");
+    sidebar = body.querySelector("nav");
+    sidebarToggle = body.querySelector(".sidebar-toggle");
 
+    let getMode = localStorage.getItem("mode");
+    if(getMode && getMode ==="dark"){
+        body.classList.toggle("dark");
+    }
+
+    let getStatus = localStorage.getItem("status");
+    if(getStatus && getStatus ==="close"){
+        sidebar.classList.toggle("close");
+    }
+
+    modeToggle.addEventListener("click", () =>{
+        body.classList.toggle("dark");
+        if(body.classList.contains("dark")){
+            localStorage.setItem("mode", "dark");
+        }else{
+            localStorage.setItem("mode", "light");
+        }
+    });
+
+    sidebarToggle.addEventListener("click", () => {
+        sidebar.classList.toggle("close");
+        if(sidebar.classList.contains("close")){
+            localStorage.setItem("status", "close");
+        }else{
+            localStorage.setItem("status", "open");
+        }
+    });
+</script>
