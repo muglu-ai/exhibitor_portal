@@ -8,7 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!----======== CSS ======== -->
-    @vite(['resources/css/portal.css'])
+    <link rel="stylesheet" href="{{asset('css/portal.css')}}">
+{{--    @vite(['resources/css/portal.css'])--}}
     {{-- @vite(['resources/css/app.css', 'resources/js/app.js'])--}}
     <!----===== Iconscout CSS ===== -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
