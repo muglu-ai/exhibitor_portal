@@ -13,7 +13,7 @@ $exh_id = session('exhibitor_id');
     <!-- Exhibitor information -->
     <div class="bg-white rounded-lg shadow-md p-6">
         <div class="flex items-center space-x-4">
-            <img src="{{ asset('logo1.png') }}" alt="Organization Logo" class="w-40 rounded-full">
+            <img src="{{ Storage::url('logos/' . $directories->org_logo) }}" alt="Organization Logo" class="w-40 rounded-full">
             <div>
                 <h2 class="text-2xl font-bold text-primary">{{ $directories->fascia_name }}</h2>
             </div>
@@ -24,7 +24,7 @@ $exh_id = session('exhibitor_id');
     @else
     <div class="bg-white rounded-lg shadow-md p-6">
         <h2 class="text-2xl font-bold mb-4">Fill the Exhibitor Directory Information</h2>
-        <form class="grid gap-4" method="POST" action={{route('post_ExhibitorDirectory')}}>
+        <form class="grid gap-4" method="POST" action={{route('post_ExhibitorDirectory')}} enctype="multipart/form-data">
             @csrf <!-- CSRF protection -->
             <input type="hidden" name="exhibitor_id" value="{{ $exh_id }}">
             <div class="grid gap-2">
