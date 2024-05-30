@@ -85,8 +85,15 @@ Route::get('portal/getExhibitorDelegate', [App\Http\Controllers\ExhibitorDelegat
 Route::put('portal/editExhibitorDelegate', [App\Http\Controllers\ExhibitorDelegatesController::class, 'updateExhibitorDelegate'])->name('edit_ExhibitorDelegate');
 Route::post('portal/submitExhibitorDelegateData', [App\Http\Controllers\ExhibitorDelegatesController::class, 'postExhibitorDelegate'])->name('post_ExhibitorDelegate');
 
+//DelegateInvitation
+Route::post('portal/send-invitation', [App\Http\Controllers\InvitationController::class, 'sendInvitation'])->name('send_invitation');
+Route::post('/resend-invitation/{email}', [App\Http\Controllers\InvitationController::class, 'resendInvitation'])->name('resend_invitation');
+Route::delete('/cancel-invitation/{email}', [App\Http\Controllers\InvitationController::class, 'cancelInvitation'])->name('cancel_invitation');
+
 });
 //Portal Login post
 // Route::get('/portal', function () {
 //    return view('portal.pages.dashboard');
 // })->middleware(['auth', 'verified'])->name('portal');
+Route::get('/delegate-form/{token}', [App\Http\Controllers\InvitationController::class, 'showDelegateForm'])->name('delegate_form');
+Route::post('/delegate-form/{token}', [App\Http\Controllers\InvitationController::class, 'submitDelegateForm'])->name('submit_delegate_form');
