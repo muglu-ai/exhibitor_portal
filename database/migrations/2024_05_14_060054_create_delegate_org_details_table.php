@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('delegate_org_details', function (Blueprint $table) {
             $table->increments('id');
             $table->string('exhibitor_id',30)->nullable();
-            $table->string('delegate_id',30)->index();
+            $table->string('delegate_id',30)->unique();
             $table->string('sector',150)->nullable();
             $table->string('org_type',150)->nullable();
             $table->string('delegates_count',5)->nullable();

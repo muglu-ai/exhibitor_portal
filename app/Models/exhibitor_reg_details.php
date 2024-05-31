@@ -69,8 +69,12 @@ class exhibitor_reg_details extends Model
         'event_year',
         'sm_count',
         'delegate_alloted',
-        'service_req',
+        'service_badge',
         'can_invite',
+        'pg_timestamp',
+        'pg_datestamp',
+        'pg_response',
+        'pg_message',
 ];
 
 

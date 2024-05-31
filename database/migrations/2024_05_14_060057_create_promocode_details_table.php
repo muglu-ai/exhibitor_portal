@@ -15,7 +15,7 @@ return new class extends Migration
 
         Schema::create('promocode_details', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('promocode_organization')->index(); // Adding index to the column
+            $table->string('promocode_organization')->unique(); // Adding index to the column
             $table->string('promo_code')->nullable();
             $table->string('exhibitor_count')->nullable();
             $table->string('delegate_count')->nullable();
