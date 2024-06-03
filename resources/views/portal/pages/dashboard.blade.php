@@ -21,7 +21,7 @@
             <div class="box box3">
                 <i class="uil uil-share"></i>
                 <span class="text">Service Badges</span>
-                <span class="number">{{ $exhibitordetail->service_badge }}</span>
+                <span class="number">{{ $exhibitordetail->service_req }}</span>
             </div>
         </div>
         @endif

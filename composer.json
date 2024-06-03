@@ -13,7 +13,8 @@
         "mews/captcha": "^3.3",
         "monarobase/country-list": "^3.5",
         "outhebox/blade-flags": "^1.5",
-        "stidges/laravel-country-flags": "^3.0"
+        "stidges/laravel-country-flags": "^3.0",
+        "ext-curl": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

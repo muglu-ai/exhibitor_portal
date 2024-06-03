@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ExhibitorPortalInvitation;
 use App\Models\Exhibitor;
 use App\Models\exhibitor_reg_details;
 use App\Models\exhibitor_reg_table;
@@ -304,6 +305,9 @@ class FormController extends Controller
             ];
             user_login_details::create($loginData);
 
+            //send mail to exhibitor with login details
+            $mail = new ExhibitorPortalInvitation();
+
             // Check if exhibitor exists
             if (!$exhibitor) {
                 // Handle the case where the exhibitor is not found
@@ -424,6 +428,30 @@ class FormController extends Controller
         $captcha = new Captcha();
         return $captcha->create('default', true);
     }
+
+    //mail send test
+
+    /**
+     * @throws \ReflectionException
+     */
+    public function sendMail()
+    {
+
+        $name = 'Manish';
+
+        $email = ['manish.interlink@gmail.com','harsh.interlinks@gmail.com'];
+        $password = '12345678';
+        $mail = new ExhibitorPortalInvitation($name, $email[0], $password);
+        //convert mail to string
+        $mail = $mail->render();
+
+        //$mail->subject('Welcome to Our Exhibitor Portal');
+
+        (new EmailController)->sendEmail($email, 'Welcome to Our Exhibitor Portal', 'Hello');
+    }
+
+
+
 
    /* public function validateCaptcha(Request $request)
 {

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CashfreePaymentController;
+use App\Http\Controllers\EmailController;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EventController;
@@ -46,6 +47,10 @@ Route::post('/newpayment', [FormController::class, 'paymentPage'])->name('paymen
 Route::post('/paynow', [CashfreePaymentController::class, 'paynow'])->name('paynow');
 
 Route::post('/payment', [CashfreePaymentController::class, 'createOrder'])->name('createOrder');
+
+
+//mail test
+Route::get('/mail', [EmailController::class, 'test'])->name('mail');
 
 
 Route::get('/newdelegate', [DelegateController::class, 'show'])->name('delegate.create');
