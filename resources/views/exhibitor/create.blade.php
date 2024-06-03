@@ -280,9 +280,9 @@ OPTION	BOOTH SIZE(SQM)	TOTAL COST IN INR
         <div class="sm:col-span-2 mt-5">
             <label for="cp_con_number" class="block text-sm font-semibold leading-6 text-gray-900">Contact Person Contact Number *</label>
             <div class="relative mt-2.5">
+                <p id="cp_con_number_error" class="error-message">Please Enter 10 digits Mobile Number.</p>
                 <div class="absolute inset-y-0 left-0 flex items-center">
                     <label for="country" class="sr-only">Country</label>
-                    <p id="cp_con_number_error" class="error-message">Please Enter 10 digits Mobile Number.</p>
                     <select id="country" name="country" class="h-full rounded-md border-0 bg-transparent bg-none py-0 pl-4 pr-9 text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm">
                         <option>IN</option>
                         <option>CA</option>

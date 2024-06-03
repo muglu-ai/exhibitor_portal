@@ -202,6 +202,7 @@ class CashfreePaymentController extends Controller
             }
 
             $pg_response = $msg ." ". $order_id ." " . $entity ." ". $is_captured ." " .$order_amount ." ".  $payment_group ." ". $payment_currency ." ". $payment_amount ." ".  $payment_time ." ". $payment_completion_time . " ". $payment_status ." ". $payment_message ." ". $bank_reference ." ". $payment_channel ." ". $upi_id;
+
             /* TODO
             Add payment date and time column in exhibitor_reg_details table
             pg_message to be added in exhibitor_reg_details table
