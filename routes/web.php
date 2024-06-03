@@ -63,8 +63,7 @@ Route::middleware('auth')->group(function () {
 
 Route::get('portal/exhibitor', [App\Http\Controllers\ExhibitorController::class, 'getOneExhibitor'])->name('get_one_exhibitor');
 Route::post('portal/exhibitor', [App\Http\Controllers\ExhibitorController::class, 'postExhibitor'])->name('post_exhibitor');
-Route::put('portal/exhibitor', [App\Http\Controllers\ExhibitorController::class, 'updateExhibitor'])->name('update_exhibitor');
-
+Route::patch('portal/exhibitor/{exhibitor_id}', [App\Http\Controllers\ExhibitorController::class, 'update'])->name('exhibitor.update');
 
 //stallManningController -->harsh
 Route::get('portal/getStallManning', [StallManningController::class, 'getStallManning'])->name('get_StallManning');

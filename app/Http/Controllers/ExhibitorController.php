@@ -26,7 +26,8 @@ class ExhibitorController extends Controller
     {
         $exhibitor_id = $request->session()->get('exhibitor_id');
         $exhibitor = exhibitor_reg_details::where('exhibitor_id', $exhibitor_id)->first();
-        return view('portal.pages.exhibitor', compact('exhibitor'));
+        $missingFields = $this->checkMissingFields($exhibitor);
+        return view('portal.pages.exhibitor', compact('exhibitor', 'missingFields'));
     }
 
     public function postExhibitor(Request $request)
@@ -36,22 +37,52 @@ class ExhibitorController extends Controller
         return response()->json($exhibitor, 201); // Return the created record with a 201 status code
 
     }
-
-    public function updateExhibitor(Request $request)
+    private function checkMissingFields($exhibitor)
     {
-        $exhibitor_id = $request->session()->get('exhibitor_id');
-        // Find the exhibitor by exhibitor_id
-        $exhibitor = exhibitor_reg_details::where('exhibitor_id', $exhibitor_id)->firstOrFail();
+        // Fields that are considered required
+        $requiredFields = [
+            'org_name',
+            'org_type',
+            'sector',
+            'address1',
+            'city',
+            'state',
+            'country',
+            'zip_code',
+            'cp_title',
+            'cp_fname',
+            'cp_lname',
+            'cp_designation',
+            'cp_mobile',
+            'website',
+            'gst_number',
+            'pan_number',
+            'sales_executive'
+        ];
 
-        // Update the exhibitor with the data from the request
+        // Check if any required field is empty
+        foreach ($requiredFields as $field) {
+            if (empty($exhibitor->$field)) {
+                return true; // Return true if any required field is empty
+            }
+        }
+
+        return false; // Return false if all required fields are filled
+    }
+
+    public function update(Request $request, $exhibitor_id)
+    {
+        $exhibitor = exhibitor_reg_details::where('exhibitor_id', $exhibitor_id)->first();
+        // Update the exhibitor information
         $exhibitor->update($request->all());
 
-        // Return the updated exhibitor and a 200 status code
-        return response()->json($exhibitor, 200);
+        return redirect()->back()->with('success', 'Exhibitor information updated successfully!');
     }
+
     public function getExhibitorData(Request $request)
     {
         $exhibitor_id = $request->session()->get('exhibitor_id');
+        Log::info($exhibitor_id);
 
         if (!$exhibitor_id) {
             return redirect()->route('login')->with('error', 'Session expired. Please log in again.');
@@ -62,7 +93,6 @@ class ExhibitorController extends Controller
         $delegate_count = count($delegates);
         $stall_manning = exhibitor_stall_manning::where('exhibitor_id', $exhibitor_id)->get();
         $stall_manning_count = count($stall_manning);
-
 
         if (!$exhibitordetail) {
             return redirect()->route('dashboard')->with('error', 'Exhibitor not found.');
