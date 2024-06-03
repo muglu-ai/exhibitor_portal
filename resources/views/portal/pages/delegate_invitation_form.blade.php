@@ -6,6 +6,11 @@
         <form action="{{ route('submit_delegate_form', ['token' => $invitation->token]) }}" method="POST" class="grid grid-cols-2 gap-x-4">
             @csrf
             <input type="hidden" name="del_email" value="{{ $invitation->email }}">
+            @if ($org_name)
+            <div class="mb-4">
+                <label for="delegate-org" class="block text-sm font-medium">Organization: {{ $org_name }}</label>
+            </div>
+            @endif
             <div class="mb-4">
                 <label for="delegate-title" class="block text-sm font-medium">Title</label>
                 <select id="delegate-title" name="del_title" class="w-full border border-gray-300 rounded-md p-2" required>
@@ -39,7 +44,7 @@
             </div>
             <div class="mb-4">
                 <label for="delegate-id-type" class="block text-sm font-medium">ID Type</label>
-                <select id="delegate-id-type" name="del_govtid_type" class="w-full border border-gray-300 rounded-md p-2" required>
+                <select id="delegate-id-type" name="del_govtid_type" class="w-full border border-gray-300 rounded-md p-2">
                     <option value="Aadhar Card">Aadhar Card</option>
                     <option value="PAN Card">PAN Card</option>
                     <option value="Passport">Passport</option>
@@ -48,7 +53,7 @@
             </div>
             <div class="mb-4">
                 <label for="delegate-id-number" class="block text-sm font-medium">ID Number</label>
-                <input type="text" id="delegate-id-number" name="del_govtid_no" class="w-full border border-gray-300 rounded-md p-2" required>
+                <input type="text" id="delegate-id-number" name="del_govtid_no" class="w-full border border-gray-300 rounded-md p-2">
             </div>
             <div class="flex justify-end col-span-2">
                 <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md">Submit</button>

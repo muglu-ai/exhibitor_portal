@@ -28,6 +28,9 @@ class InvitationController extends Controller
             ->where('email', $inviteEmail)
             ->first();
 
+        $org_detail = exhibitor_reg_details::where('exhibitor_id', $exhibitorId)->first();
+        $org_name = $org_detail->org_name;
+
         if ($existingInvitation) {
             // An invitation with the same email and exhibitor already exists
             return redirect()->back()->with('error', 'An invitation has already been sent to this email address for this exhibitor.');
@@ -65,7 +68,10 @@ class InvitationController extends Controller
     public function showDelegateForm($token)
     {
         $invitation = Invitation::where('token', $token)->firstOrFail();
-        return view('portal.pages.delegate_invitation_form', ['invitation' => $invitation]);
+        $exhibitorId = $invitation->exhibitor_id;
+        $org_detail = exhibitor_reg_details::where('exhibitor_id', $exhibitorId)->first();
+        $org_name = $org_detail->org_name;
+        return view('portal.pages.delegate_invitation_form', ['invitation' => $invitation, 'org_name'=>$org_name]);
     }
 
 
@@ -85,8 +91,8 @@ class InvitationController extends Controller
             'del_lname' => 'required|string|max:250',
             'del_designation' => 'required|string|max:250',
             'del_contact' => 'required|string|max:15',
-            'del_govtid_type' => 'required|string|max:250',
-            'del_govtid_no' => 'required|string|max:250',
+            'del_govtid_type' => 'nullable|string|max:250',
+            'del_govtid_no' => 'nullable|string|max:250',
         ]);
         // Log::info($validatedData);
         // Save delegate information

@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ExhibitorLogin;
+use App\Models\delegate_personal_info;
 use Illuminate\Http\Request;
 use App\Models\exhibitor_reg_details;
+use App\Models\exhibitor_stall_manning;
 use Illuminate\Support\Facades\Log;
 
 class ExhibitorController extends Controller
@@ -49,21 +51,24 @@ class ExhibitorController extends Controller
     }
     public function getExhibitorData(Request $request)
     {
-        Log::info('Hhi');
         $exhibitor_id = $request->session()->get('exhibitor_id');
-        Log::info($exhibitor_id);
 
         if (!$exhibitor_id) {
             return redirect()->route('login')->with('error', 'Session expired. Please log in again.');
         }
 
         $exhibitordetail = exhibitor_reg_details::where('exhibitor_id', $exhibitor_id)->first();
+        $delegates = delegate_personal_info::where('exhibitor_id', $exhibitor_id)->get();
+        $delegate_count = count($delegates);
+        $stall_manning = exhibitor_stall_manning::where('exhibitor_id', $exhibitor_id)->get();
+        $stall_manning_count = count($stall_manning);
+
 
         if (!$exhibitordetail) {
             return redirect()->route('dashboard')->with('error', 'Exhibitor not found.');
         }
 
         // Pass exhibitordetail to the dashboard view
-        return view('portal.pages.dashboard', compact('exhibitordetail'));
+        return view('portal.pages.dashboard', compact('exhibitordetail', 'delegate_count', 'stall_manning_count'));
     }
 }

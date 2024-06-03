@@ -41,8 +41,8 @@ class ExhibitorDelegatesController extends Controller
             'del_email' => 'required|string|email|max:255',
             'del_contact' => 'required|string|max:15',
             'del_designation' => 'required|string|max:250',
-            'del_govtid_type' => 'required|string|max:250',
-            'del_govtid_no' => 'required|string|max:250',
+            'del_govtid_type' => 'nullable|string|max:250',
+            'del_govtid_no' => 'nullable|string|max:250',
         ]);
 
         // Check if the exhibitor exists
@@ -72,5 +72,23 @@ class ExhibitorDelegatesController extends Controller
 
         // Redirect back to the page with a success message
         return redirect()->back()->with('success', 'Delegate added successfully.');
+    }
+    public function updateExhibitorDelegate(Request $request, $email)
+    {
+        $request->validate([
+            'del_designation' => 'required|string|max:255',
+            'del_contact' => 'required|string|max:255',
+            'del_govtid_type' => 'nullable|string|max:255',
+            'del_govtid_no' => 'nullable|string|max:255',
+        ]);
+
+        $delegate = delegate_personal_info::where('del_email', $email)->firstOrFail();
+        $delegate->del_designation = $request->del_designation;
+        $delegate->del_contact = $request->del_contact;
+        $delegate->del_govtid_type = $request->del_govtid_type;
+        $delegate->del_govtid_no = $request->del_govtid_no;
+        $delegate->save();
+
+        return redirect()->back()->with('success', 'Delegate details updated successfully.');
     }
 }

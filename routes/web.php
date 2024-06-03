@@ -71,7 +71,7 @@ Route::get('portal/getStallManning', [StallManningController::class, 'getStallMa
 Route::put('portal/editStallManning', [App\Http\Controllers\StallManningController::class, 'updateStallManning'])->name('edit_StallManning');
 Route::post('portal/submitStallManningData', [App\Http\Controllers\StallManningController::class, 'postStallManning'])->name('post_StallManning');
 
-Route::get('portal', [App\Http\Controllers\ExhibitorController::class, 'getExhibitorData'])->name('portal');
+Route::get('/portal', [App\Http\Controllers\ExhibitorController::class, 'getExhibitorData'])->name('portal');
 
 
 //ExhibitorDirectoryController -->harsh
@@ -82,7 +82,7 @@ Route::post('portal/submitExhibitorDirectoryData', [App\Http\Controllers\Exhibit
 
 //ExhibitorDelegateController -->harsh
 Route::get('portal/getExhibitorDelegate', [App\Http\Controllers\ExhibitorDelegatesController::class, 'getExhibitorDelegate'])->name('get_ExhibitorDelegate');
-Route::put('portal/editExhibitorDelegate', [App\Http\Controllers\ExhibitorDelegatesController::class, 'updateExhibitorDelegate'])->name('edit_ExhibitorDelegate');
+Route::put('edit_ExhibitorDelegate/{email}', [App\Http\Controllers\ExhibitorDelegatesController::class, 'updateExhibitorDelegate'])->name('edit_ExhibitorDelegate');
 Route::post('portal/submitExhibitorDelegateData', [App\Http\Controllers\ExhibitorDelegatesController::class, 'postExhibitorDelegate'])->name('post_ExhibitorDelegate');
 
 //DelegateInvitation

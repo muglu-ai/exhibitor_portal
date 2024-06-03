@@ -32,8 +32,8 @@ class StallManningController extends Controller
             'sm_email' => 'required|string|email|max:250',
             'sm_designation' => 'required|string|max:250',
             'sm_mobile' => 'required|string|max:15',
-            'sm_govt_id_type' => 'required|string|max:250',
-            'sm_govt_id_number' => 'required|string|max:250',
+            'sm_govt_id_type' => 'nullable|string|max:250',
+            'sm_govt_id_number' => 'nullable|string|max:250',
         ]);
 
         $exhibitor_id = $request->input('exhibitor_id');
