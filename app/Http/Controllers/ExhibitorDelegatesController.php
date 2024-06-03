@@ -4,8 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\delegate_personal_info;
 use App\Models\exhibitor_reg_details;
+use App\Models\Invitation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class ExhibitorDelegatesController extends Controller
 {
@@ -14,11 +18,16 @@ class ExhibitorDelegatesController extends Controller
     {
         $exhibitor_id = $request->session()->get('exhibitor_id');
         $delegate = delegate_personal_info::where('exhibitor_id', $exhibitor_id)->get();
-        $delegate_count = $delegate->count();
+        $delegate_registered = $delegate->count();
         $exhibitor_detail = exhibitor_reg_details::where('exhibitor_id', $exhibitor_id)->first();
         $exhibitor_del_count = $exhibitor_detail ? $exhibitor_detail->delegate_alloted : 0;
 
-        return view('portal.pages.exhibitor_delegate', compact('delegate', 'exhibitor_detail', 'delegate_count', 'exhibitor_del_count'));
+
+        $exhibitor_id = $request->session()->get('exhibitor_id');
+        $invited_Delegates = Invitation::where('exhibitor_id', $exhibitor_id)->get();
+        $invited_Delegate_count = $invited_Delegates->count();
+
+        return view('portal.pages.exhibitor_delegate', compact('delegate', 'exhibitor_detail', 'delegate_registered', 'exhibitor_del_count', 'invited_Delegates', 'invited_Delegate_count'));
     }
     //Post
     public function postExhibitorDelegate(Request $request)
@@ -32,8 +41,8 @@ class ExhibitorDelegatesController extends Controller
             'del_email' => 'required|string|email|max:255',
             'del_contact' => 'required|string|max:15',
             'del_designation' => 'required|string|max:250',
-            'del_govtid_type' => 'required|string|max:250',
-            'del_govtid_no' => 'required|string|max:250',
+            'del_govtid_type' => 'nullable|string|max:250',
+            'del_govtid_no' => 'nullable|string|max:250',
         ]);
 
         // Check if the exhibitor exists
@@ -63,5 +72,23 @@ class ExhibitorDelegatesController extends Controller
 
         // Redirect back to the page with a success message
         return redirect()->back()->with('success', 'Delegate added successfully.');
+    }
+    public function updateExhibitorDelegate(Request $request, $email)
+    {
+        $request->validate([
+            'del_designation' => 'required|string|max:255',
+            'del_contact' => 'required|string|max:255',
+            'del_govtid_type' => 'nullable|string|max:255',
+            'del_govtid_no' => 'nullable|string|max:255',
+        ]);
+
+        $delegate = delegate_personal_info::where('del_email', $email)->firstOrFail();
+        $delegate->del_designation = $request->del_designation;
+        $delegate->del_contact = $request->del_contact;
+        $delegate->del_govtid_type = $request->del_govtid_type;
+        $delegate->del_govtid_no = $request->del_govtid_no;
+        $delegate->save();
+
+        return redirect()->back()->with('success', 'Delegate details updated successfully.');
     }
 }

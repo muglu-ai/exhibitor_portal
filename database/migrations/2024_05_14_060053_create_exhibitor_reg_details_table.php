@@ -15,7 +15,7 @@ return new class extends Migration
 
         Schema::create('exhibitor_reg_details', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('exhibitor_id',30)->index();
+            $table->string('exhibitor_id',30)->unique();
             $table->string('org_name',250)->nullable();
             $table->string('org_type',250)->nullable();
             $table->string('sector',100)->nullable();
@@ -32,7 +32,7 @@ return new class extends Migration
             $table->string('cp_title',30)->nullable();
             $table->string('cp_fname',250)->nullable();
             $table->string('cp_lname',250)->nullable();
-            $table->string('cp_email',250)->index();
+            $table->string('cp_email',250)->unique();
             $table->string('cp_designation',250)->nullable();
             $table->string('cp_mobile',15)->nullable();
             $table->string('website',250)->nullable();
@@ -46,7 +46,7 @@ return new class extends Migration
             $table->string('user_type',250)->nullable();
             $table->string('exhibiting_under',250)->nullable();
             $table->string('reg_date',250)->nullable();
-            $table->string('tin_no',100)->index();
+            $table->string('tin_no',100)->unique();
             $table->string('currency',100)->nullable();
             $table->string('amt_ext',100)->nullable();
             $table->string('paymode',100)->nullable();
@@ -70,6 +70,10 @@ return new class extends Migration
             $table->text('pg_avr')->nullable();
             $table->text('pg_ref')->nullable();
             $table->text('pg_amt')->nullable();
+            $table->text('pg_timestamp')->nullable();
+            $table->text('pg_datestamp')->nullable();
+            $table->text('pg_response')->nullable();
+            $table->text('pg_message')->nullable();
             $table->string('event_name', 250)->nullable();
             $table->string('event_year', 4)->nullable();
             $table->string('sm_count', 5)->nullable();

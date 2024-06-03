@@ -21,8 +21,8 @@ class delegate_personal_info extends Model
         'del_email',
         'del_designation',
         'del_contact',
-        'del_govt_id_type',
-        'del_govt_id_number',
+        'del_govtid_type',
+        'del_govtid_no',
         'del_category',
     ];
 }

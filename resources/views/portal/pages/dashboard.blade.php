@@ -7,24 +7,27 @@
             <span class="text">Dashboard</span>
         </div>
         @if($exhibitordetail)
+        @if(isset($delegate_count) && isset($stall_manning_count))
         <div class="boxes">
             <div class="box box1">
                 <i class="uil uil-thumbs-up"></i>
                 <span class="text">Exhibitor Delegates</span>
-                <span class="number">{{ $exhibitordetail->delegate_alloted }}</span>
+                <span class="number">{{ $delegate_count }} / {{ $exhibitordetail->delegate_alloted }}  </span>
             </div>
             <div class="box box2">
                 <i class="uil uil-comments"></i>
                 <span class="text">Stall Manning</span>
-                <span class="number">{{ $exhibitordetail->sm_count }}</span>
+                <span class="number">{{ $stall_manning_count }} / {{ $exhibitordetail->sm_count }}</span>
             </div>
             <div class="box box3">
                 <i class="uil uil-share"></i>
                 <span class="text">Service Badges</span>
-                <span class="number">{{ $exhibitordetail->service_req }}</span>
+                <span class="number">0 / {{ $exhibitordetail->service_badge }}</span>
             </div>
         </div>
-        @endif
+    @endif
+@endif
+
     </div>
 </div>
 
